@@ -46,7 +46,7 @@
                         if (username != null) {
                             // Si el usuario ha iniciado sesión, muestra su nombre
                             out.print("¡Bienvenido, " + username + "!");
-                            out.print("<a href='' id='close'> · Cerrar Sesión</a>");
+                            out.print("<a href='logout.jsp' id='close'> · Cerrar Sesión</a>");
                         } else {
                             // Si el usuario no ha iniciado sesión, muestra el enlace de "Login"
                             out.print("<a href='' id='log'>Login</a>");

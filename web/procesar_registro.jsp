@@ -4,6 +4,7 @@
     Author     : Yohanna Gelo
 --%>
 
+<%@page import="clases.Visita"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="com.mysql.cj.xdevapi.Statement"%>
@@ -42,6 +43,16 @@
                 int filasAfectadas = stmt.executeUpdate();
 
                 if (filasAfectadas > 0) {
+
+                    // Instanciamos una visita, para registrar su actividad en la página
+                    Visita nuevaVisita = new Visita(username);
+                    nuevaVisita.registrarVisita();
+                    nuevaVisita.guardarDatos();
+                    
+                    // Almacenar el nombre de usuario en la sesión actual del navegador
+                    session = request.getSession();
+                    session.setAttribute("username", username);
+
                     // Si el registro es exitoso, redirigir a index.jsp y mostrar un mensaje de alerta
                     out.println("<script>");
                     out.println("alert('Registro exitoso. ¡Bienvenido!');");

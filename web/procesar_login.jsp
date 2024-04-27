@@ -4,6 +4,7 @@
     Author     : yohan
 --%>
 
+<%@page import="clases.Visita"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.ResultSet"%>
@@ -41,9 +42,20 @@
 
                 // Verificar si hay un registro que coincida con las credenciales
                 if (rs.next()) {
-                    // Almacenar el nombre de usuario en la sesión
+                    // Almacenar el nombre de usuario en la sesión actual del navegador
                     session = request.getSession();
                     session.setAttribute("username", username);
+                    
+                    // Registra la visita
+                    // Cargar el objeto Visita existente
+                    Visita visita = new Visita(username);
+                    visita.cargarDatos(); // Cargar datos del fichero
+
+                    // Actualizar los datos de la visita
+                    visita.registrarVisita();
+
+                    // Guardar los datos actualizados
+                    visita.guardarDatos();
                     
                     // Redirige a la página de inicio
                     response.sendRedirect("index.jsp");
