@@ -41,10 +41,14 @@
 
                 // Verificar si hay un registro que coincida con las credenciales
                 if (rs.next()) {
-                    // Las credenciales son válidas
-                    // Puedes iniciar una sesión aquí si lo deseas
+                    // Almacenar el nombre de usuario en la sesión
+                    session = request.getSession();
+                    session.setAttribute("username", username);
+                    
+                    // Redirige a la página de inicio
+                    response.sendRedirect("index.jsp");
+                    // Las credenciales son válidas, muestra mensaje
                     out.println("<script>");
-                    out.println("alert('Inicio de sesión exitoso.');");
                     out.println("window.location.href = 'index.jsp';");
                     out.println("</script>");
                 } else {
@@ -60,9 +64,15 @@
             } finally {
                 // Cerrar recursos
                 try {
-                    if (rs != null) rs.close();
-                    if (stmt != null) stmt.close();
-                    if (conexion != null) conexion.close();
+                    if (rs != null) {
+                        rs.close();
+                    }
+                    if (stmt != null) {
+                        stmt.close();
+                    }
+                    if (conexion != null) {
+                        conexion.close();
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

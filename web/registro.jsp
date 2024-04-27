@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>Registro de Usuario</title>
-    <link rel="stylesheet" type="text/css" href="css/cssIndex.css">
+    <link rel="stylesheet" type="text/css" href="css/css_index.css">
     <link rel="icon" href="img/favicon.png" type="image/x-icon">
 </head>
 <body>
