@@ -9,13 +9,33 @@ and open the template in the editor.
     Author     : Yohanna Gelo
 */
 
-/* Estilos globales */
+/* Fuentes usadas */
+
+
+@font-face {
+    /* para inserta una fuente descargada */
+    font-family: 'ephesis';
+    /* Nombre de la fuente */
+    src: url('font/Ephesis-Regular.ttf') format('truetype');
+    /* Ruta de la fuente */
+}
+
+
+/* Estilos generales */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Bad Script', cursive;
+    font-size: 18px;
     margin: 0;
     padding: 0;
     background-color: #1a1a1a;
     color: #f0f0f0;
+}
+
+h1 {
+    font-family: ephesis, sans-serif;
+    font-size: 80px;
+    text-align: right;
+    margin-right: 3em;
 }
 
 /* Menú de navegación */
@@ -39,10 +59,21 @@ nav ul li a {
     color: #f0f0f0;
     text-decoration: none;
     font-weight: bold;
+    margin: 0 1em 0 1em;
+    font-size: 26px;
+}
+
+.userLogin {
+    color: #f0f0f0;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 0 1em 0 1em;
+    font-size: 26px;
 }
 
 nav ul li a:hover {
     color: #f48fb1; /* Color rosa */
+    font-size: 26.4px;
 }
 
 /* Sección de previsualizador */

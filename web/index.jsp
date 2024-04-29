@@ -19,11 +19,13 @@
         <title>Yohanna Gelo</title>
         <link rel="stylesheet" type="text/css" href="css/css_index.css">
         <link rel="icon" href="img/favicon.png" type="image/x-icon">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bad+Script&display=swap">
+
     </head>
     <body>
 
         <!-- Título principal de la página -->
-        <h1>Portfolio</h1>
+        <h1>Yohanna Gelo</h1>
 
         <%
             // Obtener la sesión HTTP
@@ -41,7 +43,7 @@
                 <li><a href="">Documentos</a></li>
                 <li><a href="">Códigos</a></li>
                 <li><a href="">Contacto</a></li>
-                <li>
+                <li class="userLogin">
                     <%
                         if (username != null) {
                             // Si el usuario ha iniciado sesión, muestra su nombre
@@ -89,6 +91,9 @@
                 <h3>Código</h3>
                 <div class="project-container">
                     <!-- código -->
+                    <iframe height="400px" width="100%" src="https://replit.com/@yohannagelo/Sorteo?embed=true" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals">
+</iframe>
+                    
                 </div>
             </div>
         </section>

@@ -72,3 +72,4 @@ document.addEventListener('DOMContentLoaded', function() {
         sessionStorage.setItem('hasVisited', 'true');
     }
 });
+
