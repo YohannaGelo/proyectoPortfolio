@@ -22,12 +22,8 @@
             String password = request.getParameter("password");
             String email = request.getParameter("email");
 
-            // Aquí debes agregar la lógica para almacenar los datos en la base de datos
-            // Por ejemplo:
             try {
-                // Conexión a la base de datos (deberás proporcionar los detalles de conexión)
-                //Connection conn = DriverManager.getConnection("jdbc:tuBaseDeDatos", "usuario", "contraseña");
-
+                // Conexión a la base de datos
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/portfolio", "root", "");
                 //Statement s = conexion.createStatement();

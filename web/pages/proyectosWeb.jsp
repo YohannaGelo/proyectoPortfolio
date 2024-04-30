@@ -4,6 +4,13 @@
     Author     : Yohanna Gelo
 --%>
 
+
+<%@page import="java.io.InputStream"%>
+<%@page import="java.io.ByteArrayOutputStream"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,7 +23,6 @@
 
     </head>
     <body>
-
         <!-- Título principal de la página -->
         <h1>Yohanna Gelo</h1>
 
@@ -74,19 +80,55 @@
 
 
         <!-- CONTENIDO DE LA PÁGINA -->
+    <center>
         <section id="proyectos">
-            <h2>Mis Proyectos</h2>
+            <h2>Proyectos web</h2>
             <div class="proyecto" id="paginas-web">
-                <h3>Proyectos Web</h3>
-                <div class="project-container">
-                    <!-- páginas web -->
-                    <!-- <iframe src="https://yohannagelo.github.io/ProyBancoLM/?embed=true" style="width: 100%; height: 56.25vw;"></iframe>-->
+                <%
+                    Class.forName("com.mysql.jdbc.Driver");
+                    Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/portfolio", "root", "");
+                    Statement s = conexion.createStatement();
+                    ResultSet listado = s.executeQuery("SELECT * FROM proyectosWeb");
+                    while (listado.next()) {
+                        // Crea un div para cada proyecto
+                        out.println("<div class='project-container'>");
 
-                </div>
+                        // Enlaces en el título del proyecto. Usa target blank para abrirse en una nueva pestaña
+                        out.println("<a href='" + listado.getString("url") + "' class='link' target='_blank'>Pincha aquí o en la imágen para ver completo el proyecto " + listado.getString("nombreProyecto") + "</a>");
+
+                        // Obtener la imagen de la base de datos como InputStream
+                        InputStream imagenStream = listado.getBinaryStream("img");
+
+                        // Leer el contenido de la imagen y codificarla en base64
+                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                        byte[] buffer = new byte[1024];
+                        int bytesRead;
+                        while ((bytesRead = imagenStream.read(buffer)) != -1) {
+                            byteArrayOutputStream.write(buffer, 0, bytesRead);
+                        }
+                        byte[] imageBytes = byteArrayOutputStream.toByteArray();
+                        String base64Image = java.util.Base64.getEncoder().encodeToString(imageBytes);
+
+                        // Renderizar la imagen en HTML como un elemento <img>
+                        out.println("<br>");
+                        out.println("<a href='" + listado.getString("url") + "' target='_blank'>");
+
+                        out.println("<img src=\"data:image/jpeg;base64," + base64Image + "\" alt=\"Imagen del socio\" class=\"imgProyectWeb\">");
+                        out.println("</a>");
+                        // Cerrar el InputStream y el ByteArrayOutputStream
+                        imagenStream.close();
+                        byteArrayOutputStream.close();
+
+                        out.println("<br>");
+                        out.println("</div>");
+                    }
+                    conexion.close();
+                %>
+
             </div>
         </section>
-
-        <!-- Enlace al archivo que contiene el código de javascript -->
-        <script src="../js/js_index.js"></script>
-    </body>
+    </center>
+    <!-- Enlace al archivo que contiene el código de javascript -->
+    <script src="../js/js_index.js"></script>
+</body>
 </html>

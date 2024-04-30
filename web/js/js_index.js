@@ -8,11 +8,21 @@
 // Ejemplo de evento al pasar el ratón por áreas
 const projectContainers = document.querySelectorAll('.project-container');
 projectContainers.forEach(container => {
+    
+    // Selecciona el enlace dentro del contenedor
+    const link = container.querySelector('.link');
+    
     container.addEventListener('mouseenter', () => {
         container.style.backgroundColor = '#f0f0f0';
+        link.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.5)';
+        link.style.webkitTextStroke = '1px black';
+        link.style.webkitTextFillColor = 'white';
     });
     container.addEventListener('mouseleave', () => {
         container.style.backgroundColor = 'transparent';
+        link.style.textShadow = '';
+        link.style.webkitTextStroke = '';
+        link.style.webkitTextFillColor = '';
     });
 });
 
