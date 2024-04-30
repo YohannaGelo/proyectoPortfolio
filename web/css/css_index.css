@@ -38,6 +38,10 @@ h1 {
     margin-right: 3em;
 }
 
+h2 {
+    color: #f48fb1; /* Color rosa */
+}
+
 /* Menú de navegación */
 nav {
     background-color: #333;
@@ -76,6 +80,14 @@ nav ul li a:hover {
     font-size: 26.4px;
 }
 
+/* Estilo botón cerrar sesión */
+#iconCerrar {
+    width: 27.5px;
+    height: auto;
+}
+
+
+
 /* Sección de previsualizador */
 #previsualizador {
     padding: 20px;
@@ -97,7 +109,7 @@ nav ul li a:hover {
 }
 
 .proyecto h3 {
-    color: #b39ddb; /* Color morado */
+    /*color: #b39ddb; /* Color morado */
 }
 
 .project-container {
