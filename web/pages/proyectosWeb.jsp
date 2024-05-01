@@ -5,6 +5,8 @@
 --%>
 
 
+<%@page import="java.sql.SQLException"%>
+<%@page import="java.util.Date"%>
 <%@page import="java.io.InputStream"%>
 <%@page import="java.io.ByteArrayOutputStream"%>
 <%@page import="java.sql.Statement"%>
@@ -88,7 +90,11 @@
                     Class.forName("com.mysql.jdbc.Driver");
                     Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/portfolio", "root", "");
                     Statement s = conexion.createStatement();
-                    ResultSet listado = s.executeQuery("SELECT * FROM proyectosWeb");
+                    //ResultSet listado = s.executeQuery("SELECT * FROM proyectosWeb");
+                    ResultSet listado = s.executeQuery(
+                            "SELECT * FROM proyectosWeb p LEFT JOIN comentarios c ON p.url = c.url"
+                    );
+
                     while (listado.next()) {
                         // Crea un div para cada proyecto
                         out.println("<div class='project-container'>");
@@ -106,27 +112,56 @@
                         while ((bytesRead = imagenStream.read(buffer)) != -1) {
                             byteArrayOutputStream.write(buffer, 0, bytesRead);
                         }
+
                         byte[] imageBytes = byteArrayOutputStream.toByteArray();
                         String base64Image = java.util.Base64.getEncoder().encodeToString(imageBytes);
 
                         // Renderizar la imagen en HTML como un elemento <img>
                         out.println("<br>");
                         out.println("<a href='" + listado.getString("url") + "' target='_blank'>");
-
                         out.println("<img src=\"data:image/jpeg;base64," + base64Image + "\" alt=\"Imagen del socio\" class=\"imgProyectWeb\">");
                         out.println("</a>");
+
                         // Cerrar el InputStream y el ByteArrayOutputStream
                         imagenStream.close();
                         byteArrayOutputStream.close();
 
                         out.println("<br>");
-                        out.println("</div>");
+
+                        if (username != null) {
+
+                %>
+                <h4>Comentarios:</h4>
+                <form action="procesar_comentarios.jsp" method="POST" id="feedback">
+                    <label for="comentario">Deja tu feedback: </label>
+                    <input type="text" id="comentario" name="comentario" required>
+
+                    <button type="submit">Registrar</button>
+                </form>
+                <%                    
+                    if (listado.getString("username") != null && listado.getString("comentario") != null && listado.getString("fecha") != null) {
+                        out.println("<font> · Usuario: " + listado.getString("username") + "<br> · Comentario: " + listado.getString("comentario") + "<br> · Fecha de registro: " + listado.getString("fecha") + "</font><br>");
                     }
+
+                %>
+
+
+
+
+
+
+                <%                        }
+
+                        out.println("</div>");
+
+                    }
+
                     conexion.close();
                 %>
 
             </div>
         </section>
+
     </center>
     <!-- Enlace al archivo que contiene el código de javascript -->
     <script src="../js/js_index.js"></script>
