@@ -28,6 +28,9 @@
                 Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/portfolio", "root", "");
                 //Statement s = conexion.createStatement();
 
+                // Encripta la contraseña
+                password = clases.metodosAuxiliares.encriptando(password);
+
                 // Consulta SQL para insertar datos
                 String sql = "INSERT INTO usuarios (username, password, email) VALUES (?, ?, ?)";
                 PreparedStatement stmt = conexion.prepareStatement(sql);
@@ -44,7 +47,7 @@
                     Visita nuevaVisita = new Visita(username);
                     nuevaVisita.registrarVisita();
                     nuevaVisita.guardarDatos();
-                    
+
                     // Almacenar el nombre de usuario en la sesión actual del navegador
                     session = request.getSession();
                     session.setAttribute("username", username);
@@ -61,6 +64,14 @@
                 // Cerrar recursos
                 stmt.close();
                 conexion.close();
+
+            } catch (java.sql.SQLIntegrityConstraintViolationException ex) {
+                // Si hay error de clave duplicada
+                out.println("<script>");
+                out.println("alert('El nombre de usuario ya está en uso. Por favor, elige otro nombre de usuario.');");
+                out.println("window.history.back();");
+                out.println("</script>");
+                
             } catch (Exception e) {
                 e.printStackTrace();
                 out.println("<p>Hubo un error al procesar el registro. Por favor, inténtelo de nuevo.</p>");
