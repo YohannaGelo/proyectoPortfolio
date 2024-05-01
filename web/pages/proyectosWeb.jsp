@@ -131,35 +131,57 @@
                         if (username != null) {
 
                 %>
-                <h4>Comentarios:</h4>
-                <form action="procesar_comentarios.jsp" method="POST" id="feedback">
-                    <label for="comentario">Deja tu feedback: </label>
-                    <input type="text" id="comentario" name="comentario" required>
+                <div class="divComentarios">
+                    <form action="../procesar_comentarios.jsp" method="POST" id="feedback">
+                        <input type="hidden" name="proyecto_id" value="<%= listado.getInt("id")%>">
+                        <input type="hidden" name="proyecto_url" value="<%= listado.getString("url")%>">
+                        <textarea id="feedback_area" name="feedback" placeholder="Escribe tu feedback aquí..." required></textarea><br>
+                        <button type="submit">Enviar feedback</button>
+                    </form>
+                    <hr>
+                    <%
+                                if (listado.getString("username") != null && listado.getString("comentario") != null && listado.getString("fecha") != null) {
+                                    // Título de la sección de comentarios
+                                    //out.println("<h4>Comentarios:</h4>");
 
-                    <button type="submit">Registrar</button>
-                </form>
-                <%                    
-                    if (listado.getString("username") != null && listado.getString("comentario") != null && listado.getString("fecha") != null) {
-                        out.println("<font> · Usuario: " + listado.getString("username") + "<br> · Comentario: " + listado.getString("comentario") + "<br> · Fecha de registro: " + listado.getString("fecha") + "</font><br>");
-                    }
+                                    // Crear un contenedor para cada comentario
+                                    out.println("<div class='comentario'>");
 
-                %>
+                                    // Mostrar el comentario
+                                    out.println("<p>" + listado.getString("comentario") + "</p>");
+
+                                    // Mostrar el nombre de usuario
+                                    out.println("<p><small><strong>Usuario:</strong> " + listado.getString("username"));
+
+                                    // Mostrar la fecha del comentario
+                                    out.println(" <strong>Fecha de registro:</strong> " + listado.getString("fecha") + "</small></p>");
+
+                                    // Si el comentario es del usuario registrado, podrá eliminarlo
+                                    if (listado.getString("username") != null && listado.getString("username").equals(username)) {
+                                        // Mostrar el formulario de eliminación
+                                        out.println("<form action='../eliminarFeedback.jsp' method='POST'>");
+                                        // Campo oculto para el identificador del comentario
+                                        out.println("<input type='hidden' name='comentario_id' value='" + listado.getInt("id") + "'>");
+                                        // Botón de eliminación
+                                        out.println("<button type='submit' class='deleteButton' ><img src='../img/papelera3.png' alt='Borrar Feedback' id='iconBorrarFeedback'/></button>");
+                                        out.println("</form>");
+                                    }
+
+                                    out.println("</div>");
+                                }
+                                out.println("<hr>");
+                                out.println("</div>");
+                            }
+
+                            out.println("</div>");
+
+                        }
+
+                        conexion.close();
+                    %>
 
 
-
-
-
-
-                <%                        }
-
-                        out.println("</div>");
-
-                    }
-
-                    conexion.close();
-                %>
-
-            </div>
+                </div>
         </section>
 
     </center>

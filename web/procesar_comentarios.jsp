@@ -18,12 +18,13 @@
     </head>
     <body>
         <%
-// Obtener los datos del formulario
-            String username = (String) session.getAttribute("username");
+            // Obtener los datos del formulario
             String proyecto_id = request.getParameter("proyecto_id");
-            String comentario = request.getParameter("comentario");
+            String username = (String) session.getAttribute("username");
+            String proyecto_url = request.getParameter("proyecto_url");
+            String feedback = request.getParameter("feedback");
 
-// Conectar a la base de datos
+            // Conectar a la base de datos
             Connection conexion = null;
             PreparedStatement stmt = null;
             try {
@@ -31,19 +32,35 @@
                 conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/portfolio", "root", "");
 
                 // Insertar el comentario en la base de datos
-                String sql = "INSERT INTO comentarios (username, proyecto_id, comentario) VALUES (?, ?, ?)";
+                String sql = "INSERT INTO comentarios (id, username, url, comentario, fecha) VALUES (NULL, ?, ?, ?, CURRENT_TIMESTAMP)";
                 stmt = conexion.prepareStatement(sql);
+                //stmt.setInt(1, Integer.parseInt(proyecto_id));
                 stmt.setString(1, username);
-                stmt.setInt(2, Integer.parseInt(proyecto_id));
-                stmt.setString(3, comentario);
-                stmt.executeUpdate();
+                stmt.setString(2, proyecto_url);
+                stmt.setString(3, feedback);
 
-                // Redirigir a la página del proyecto
-                response.sendRedirect("proyectosWeb.jsp");
+
+
+                // Ejecutar la sentencia de inserción
+                int filasAfectadas = stmt.executeUpdate();
+
+                if (filasAfectadas > 0) {
+                    // Redirigir a la página del proyecto
+                    response.sendRedirect("pages/proyectosWeb.jsp");
+                } else {
+                    out.println("<p>Hubo un problema al guardar el comentario. Inténtalo de nuevo.</p>");
+                }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+                out.println("<p>Error al cargar el driver JDBC.</p>");
+            } catch (SQLException e) {
+                e.printStackTrace();
+                out.println("<p>Error en la base de datos: " + e.getMessage() + "</p>");
             } catch (Exception e) {
                 e.printStackTrace();
-                out.println("<p>Hubo un error al procesar el comentario. Por favor, inténtelo de nuevo.</p>");
+                out.println("<p>Hubo un error al procesar el comentario. Por favor, inténtalo de nuevo.</p>");
             } finally {
+                // Cerrar recursos
                 try {
                     if (stmt != null) {
                         stmt.close();
@@ -51,7 +68,7 @@
                     if (conexion != null) {
                         conexion.close();
                     }
-                } catch (Exception e) {
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }

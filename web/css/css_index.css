@@ -86,6 +86,7 @@ nav ul li a:hover {
 #iconCerrar {
     width: 27.5px;
     height: auto;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));  /* Para dar sombra a la imagen */
 }
 
 
@@ -162,12 +163,14 @@ nav ul li a:hover {
     font-size: 24px;
     font-weight: bold;
     cursor: pointer;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .close-btn:hover,
 .close-btn:focus {
     color: #e91e63; /* Color rosa oscuro */
     text-decoration: none;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 
@@ -199,6 +202,86 @@ nav ul li a:hover {
 
 #login-form button:hover {
     background-color: #e91e63; /* Color rosa oscuro */
+}
+
+/* Formulario para feedback */
+#feedback_area {
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#feedback button {
+    background-color: #f48fb1;
+    color: #1a1a1a;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 1em;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#feedback button:hover {
+    transform: scale(1.1); /* Agranda el botón un 10% */
+}
+
+/* Estilo para zona comentarios */
+h4 {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.divComentarios {
+    width: 70%;
+}
+
+.comentario {
+    background-color: #f9f9f9; 
+    padding: 10px; 
+    margin-bottom: 10px; 
+    border: 1px solid #e0e0e0; 
+    border-radius: 5px; 
+    width:  80%;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Estilo para los párrafos dentro de los comentarios */
+.comentario p {
+    margin: 5px 0; 
+}
+
+/* Estilo para el nombre de usuario */
+.comentario p strong {
+    color: #f48fb1; 
+}
+
+/* Estilo para la fecha de registro */
+.comentario p small {
+    color: #777; 
+    
+}
+
+.deleteButton {
+    background: none; /* Elimina el fondo del botón */
+    border: none; /* Elimina el borde del botón */
+    padding: 0; 
+    cursor: pointer; 
+}
+
+.deleteButton img {
+    width: 35px; 
+    height: 35px;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));  /* Para dar sombra a la imagen */
+}
+
+.deleteButton img:hover  {
+    transform: scale(1.1);
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));  /* Para dar sombra a la imagen */
 }
 
 
