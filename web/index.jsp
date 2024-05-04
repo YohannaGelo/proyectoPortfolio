@@ -17,12 +17,29 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Yohanna Gelo</title>
-        <link rel="stylesheet" type="text/css" href="css/css_index.css">
+        <!-- Link para uso de bootstrap, pongo mi css debajo para que tome los colores de mi hoja de estilos -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+        <link rel="stylesheet" type="text/css" href="cssGelo/cssGelo_Bootstrap.css">
         <link rel="icon" href="img/favicon.png" type="image/x-icon">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bad+Script&display=swap">
 
     </head>
     <body>
+        <!-- Personalizar los alerts de la página. Muestra el mensaje de alerta si existe -->
+        <%
+            String alertMessage = (String) session.getAttribute("alertMessage");
+            if (alertMessage != null) {
+        %>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>¡Éxito!</strong> <%= alertMessage%>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+        </div>
+        <%
+                // Eliminar el mensaje de alerta de la sesión
+                session.removeAttribute("alertMessage");
+            }
+        %>
 
         <!-- Título principal de la página -->
         <h1>Yohanna Gelo</h1>
@@ -58,12 +75,13 @@
                 </li>
             </ul>
         </nav>
-                
+
         <!-- Ventana emergente para el login -->
         <div id="login-modal" class="modal">
             <div class="modal-content">
                 <span class="close-btn">&times;</span>
                 <h2>Login</h2>
+                <br><br><br> <!-- Solo para page con bootstrap  -->
                 <form id="login-form" action="procesar_login.jsp" method="post">
                     <label for="username">Nombre de usuario:</label>
                     <input type="text" id="username" name="username">
@@ -78,7 +96,7 @@
                 </form>
             </div>
         </div>
-        
+
         <!-- CONTENIDO DE LA PÁGINA -->
 
         <!-- Sección de previsualizador -->
@@ -98,14 +116,7 @@
                     <!-- diseños gráficos -->
                 </div>
             </div>
-            <div class="proyecto" id="paginas-web">
-                <h3>Páginas Web</h3>
-                <div class="project-container">
-                    <!-- páginas web -->
-                    <iframe src="https://yohannagelo.github.io/ProyBancoLM/?embed=true" style="width: 100%; height: 56.25vw;"></iframe>
 
-                </div>
-            </div>
             <div class="proyecto" id="documentos-trabajos">
                 <h3>Documentos/Trabajos</h3>
                 <div class="project-container">
@@ -116,20 +127,21 @@
                 <h3>Código</h3>
                 <div class="project-container">
                     <!-- código -->
-                    <!--<iframe height="400px" width="100%" src="https://replit.com/@yohannagelo/Sorteo?embed=true" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals">
-                    </iframe>-->
-                    
+                    <iframe height="400px" width="100%" src="https://replit.com/@yohannagelo/Sorteo?embed=true" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals">
+                    </iframe>
+
                     <br>
-                    <div data-pym-src="https://www.jdoodle.com/embed/v1/8de489f0facd05ba"></div>
-                    <script src="https://www.jdoodle.com/assets/jdoodle-pym.min.js" type="text/javascript"> </script>
+                    <!--<div data-pym-src="https://www.jdoodle.com/embed/v1/8de489f0facd05ba"></div>-->
+                    <script src="https://www.jdoodle.com/assets/jdoodle-pym.min.js" type="text/javascript"></script>
 
                 </div>
             </div>
         </section>
 
-
+        <!-- Script para uso de bootstrap -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
         <!-- Enlace al archivo que contiene el código de javascript -->
-        <script src="js/js_index.js"></script>
+        <script src="jsGelo/js_index.js"></script>
     </body>
 </html>

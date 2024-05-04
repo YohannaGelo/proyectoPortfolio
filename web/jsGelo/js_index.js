@@ -17,12 +17,14 @@ projectContainers.forEach(container => {
         link.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.5)';
         link.style.webkitTextStroke = '1px black';
         link.style.webkitTextFillColor = 'white';
+
     });
     container.addEventListener('mouseleave', () => {
         container.style.backgroundColor = 'transparent';
         link.style.textShadow = '';
         link.style.webkitTextStroke = '';
         link.style.webkitTextFillColor = '';
+
     });
 });
 

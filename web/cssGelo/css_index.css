@@ -1,0 +1,294 @@
+
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 25-abr-2024, 10:13:47
+    Author     : Yohanna Gelo
+*/
+
+/* Fuentes usadas */
+@font-face {
+    /* para inserta una fuente descargada */
+    font-family: 'ephesis';
+    /* Nombre de la fuente */
+    src: url('font/Ephesis-Regular.ttf') format('truetype');
+    /* Ruta de la fuente */
+}
+
+
+/* Estilos generales */
+body {
+    font-family: 'Bad Script', cursive;
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+}
+
+h1 {
+    font-family: ephesis, sans-serif;
+    font-size: 80px;
+    text-align: right;
+    margin-right: 3em;
+}
+
+h2 {
+    font-size: 45px;
+    color: #f48fb1; /* Color rosa */
+    font-variant: small-caps;
+}
+
+/* Menú de navegación */
+nav {
+    background-color: #333;
+    padding: 10px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: #f0f0f0;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 0 1em 0 1em;
+    font-size: 26px;
+}
+
+.userLogin {
+    color: #f0f0f0;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 0 1em 0 1em;
+    font-size: 26px;
+}
+
+nav ul li a:hover {
+    color: #f48fb1; /* Color rosa */
+    font-size: 26.4px;
+}
+
+/* Estilo botón cerrar sesión */
+#iconCerrar {
+    width: 27.5px;
+    height: auto;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));  /* Para dar sombra a la imagen */
+}
+
+
+/* Sección de previsualizador */
+#previsualizador {
+    padding: 20px;
+}
+
+#project-preview {
+    background-color: #2a2a2a;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+/* Sección de proyectos */
+#proyectos {
+    padding: 20px;
+}
+
+.proyecto {
+    margin-bottom: 20px;
+}
+
+.proyecto h3 {
+    /*color: #b39ddb; /* Color morado */
+}
+
+.project-container {
+    background-color: #2a2a2a;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 0.5em;
+    width:  auto;
+    color: #333333;
+    margin-bottom: 3em;
+}
+
+.imgProyectWeb {
+    border-radius: 7px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+
+.link {
+    text-decoration: none;
+    font-size: 22px;
+}
+
+/* Ventana emergente (modal) */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #2a2a2a;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 5px;
+    width: 80%;
+    max-width: 500px;
+}
+
+.close-btn {
+    color: #f0f0f0;
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: #e91e63; /* Color rosa oscuro */
+    text-decoration: none;
+}
+
+
+/* Formulario de login dentro de la ventana emergente */
+#login-form label {
+    color: #f48fb1;
+    display: block;
+    margin-bottom: 5px;
+}
+
+#login-form input {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4a4a4a;
+    color: #f0f0f0;
+}
+
+#login-form button {
+    background-color: #f48fb1;
+    color: #1a1a1a;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#login-form button:hover {
+    background-color: #e91e63; /* Color rosa oscuro */
+}
+
+/* Formulario para feedback */
+#feedback_area {
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#feedback button {
+    background-color: #f48fb1;
+    color: #1a1a1a;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 1em;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#feedback button:hover {
+    transform: scale(1.1); /* Agranda el botón un 10% */
+}
+
+/* Estilo para zona comentarios */
+h4 {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.divComentarios {
+    width: 70%;
+}
+
+.comentario {
+    background-color: #f9f9f9; 
+    padding: 10px; 
+    margin-bottom: 10px; 
+    border: 1px solid #e0e0e0; 
+    border-radius: 5px; 
+    width:  80%;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Estilo para los párrafos dentro de los comentarios */
+.comentario p {
+    margin: 5px 0; 
+}
+
+/* Estilo para el nombre de usuario */
+.comentario p strong {
+    color: #f48fb1; 
+}
+
+/* Estilo para la fecha de registro */
+.comentario p small {
+    color: #777; 
+    
+}
+
+.deleteButton {
+    background: none; /* Elimina el fondo del botón */
+    border: none; /* Elimina el borde del botón */
+    padding: 0; 
+    cursor: pointer; 
+}
+
+.deleteButton img {
+    width: 35px; 
+    height: 35px;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));  /* Para dar sombra a la imagen */
+}
+
+.deleteButton img:hover  {
+    transform: scale(1.1);
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));  /* Para dar sombra a la imagen */
+}
+
+
+/* Estilo enlaces */
+/* ENLACES */
+a:visited,
+a:active {
+    text-decoration: none; /* Evita que se subrayen los enlaces al pasar el mouse sobre ellos, después de visitarlos o cuando se activan */
+    color: white;
+    /*  poner borde y sombra al texto   */
+   /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra */
+    /*-webkit-text-stroke: 1px black; /* Borde */
+    /*-webkit-text-fill-color: white; /* Color del texto */
+}

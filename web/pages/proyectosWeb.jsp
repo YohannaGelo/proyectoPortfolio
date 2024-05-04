@@ -19,7 +19,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Yohanna Gelo</title>
-        <link rel="stylesheet" type="text/css" href="../css/css_index.css">
+        <link rel="stylesheet" type="text/css" href="../cssGelo/css_index.css">
         <link rel="icon" href="img/favicon.png" type="image/x-icon">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bad+Script&display=swap">
 
@@ -131,6 +131,7 @@
                         if (username != null) {
 
                 %>
+                
                 <div class="divComentarios">
                     <form action="../procesar_comentarios.jsp" method="POST" id="feedback">
                         <input type="hidden" name="proyecto_id" value="<%= listado.getInt("id")%>">
@@ -186,6 +187,6 @@
 
     </center>
     <!-- Enlace al archivo que contiene el código de javascript -->
-    <script src="../js/js_index.js"></script>
+    <script src="../jsGelo/js_index.js"></script>
 </body>
 </html>

@@ -52,13 +52,25 @@
                     session = request.getSession();
                     session.setAttribute("username", username);
 
+                    // Almacenar un mensaje de alerta en la sesión
+                    session.setAttribute("alertMessage", "Registro exitoso. ¡Bienvenido!");
+
+                    // Redirigir a index.jsp
+                    response.sendRedirect("index.jsp");
+
                     // Si el registro es exitoso, redirigir a index.jsp y mostrar un mensaje de alerta
-                    out.println("<script>");
-                    out.println("alert('Registro exitoso. ¡Bienvenido!');");
-                    out.println("window.location.href = 'index.jsp';");
-                    out.println("</script>");
+                    //out.println("<script>");
+                    //out.println("alert('Registro exitoso. ¡Bienvenido!');");
+                    //out.println("window.location.href = 'index.jsp';");
+                    //out.println("</script>");
                 } else {
-                    out.println("<p>No se pudo completar el registro. Por favor, inténtelo de nuevo.</p>");
+                    // Almacenar un mensaje de alerta en la sesión
+                    session.setAttribute("alertMessage", "No se pudo completar el registro. Por favor, inténtelo de nuevo.");
+
+                    // Redirigir a index.jsp
+                    //response.sendRedirect("index.jsp");
+
+                    //out.println("<p>No se pudo completar el registro. Por favor, inténtelo de nuevo.</p>");
                 }
 
                 // Cerrar recursos
@@ -71,7 +83,7 @@
                 out.println("alert('El nombre de usuario ya está en uso. Por favor, elige otro nombre de usuario.');");
                 out.println("window.history.back();");
                 out.println("</script>");
-                
+
             } catch (Exception e) {
                 e.printStackTrace();
                 out.println("<p>Hubo un error al procesar el registro. Por favor, inténtelo de nuevo.</p>");

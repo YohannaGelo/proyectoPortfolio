@@ -1,17 +1,14 @@
-
 /*
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
 /* 
-    Created on : 25-abr-2024, 10:13:47
+    Created on : 04-may-2024, 21:19:43
     Author     : Yohanna Gelo
 */
 
 /* Fuentes usadas */
-
-
 @font-face {
     /* para inserta una fuente descargada */
     font-family: 'ephesis';
@@ -29,6 +26,7 @@ body {
     padding: 0;
     background-color: #1a1a1a;
     color: #f0f0f0;
+    
 }
 
 h1 {
@@ -36,18 +34,21 @@ h1 {
     font-size: 80px;
     text-align: right;
     margin-right: 3em;
+    padding: 0.67em 0 0.67em 0;
+    font-weight: bolder;
 }
 
 h2 {
     font-size: 45px;
     color: #f48fb1; /* Color rosa */
     font-variant: small-caps;
+    font-weight: bolder;
 }
 
 /* Menú de navegación */
 nav {
     background-color: #333;
-    padding: 10px;
+    padding: 15px 10px;
 }
 
 nav ul {
@@ -124,6 +125,18 @@ nav ul li a:hover {
     margin-bottom: 3em;
 }
 
+#registroDiv {
+    margin: 0 auto;
+    margin-top: 2em;
+    width: 50%;  
+    padding-bottom: 4em;
+    color: white;
+}  
+
+#registroDiv:hover {
+    color: black;
+}
+
 .imgProyectWeb {
     border-radius: 7px;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -154,7 +167,8 @@ nav ul li a:hover {
     padding: 20px;
     border-radius: 5px;
     width: 80%;
-    max-width: 500px;
+    max-width: 540px;
+    padding-top: 5em;
 }
 
 .close-btn {
@@ -163,14 +177,17 @@ nav ul li a:hover {
     font-size: 24px;
     font-weight: bold;
     cursor: pointer;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    width: 1.2em;
+    position: absolute; /* Posición absoluta */
+    top: 0.8em; /* Ajusta esta distancia según sea necesario */
+    right: 0.3em; /* Alineación a la derecha con espacio desde el borde */
 }
 
 .close-btn:hover,
 .close-btn:focus {
     color: #e91e63; /* Color rosa oscuro */
     text-decoration: none;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+
 }
 
 
@@ -189,18 +206,20 @@ nav ul li a:hover {
     border-radius: 5px;
     background-color: #4a4a4a;
     color: #f0f0f0;
+    height: 2em;
 }
 
-#login-form button {
+#login-form button, #miButton {
     background-color: #f48fb1;
     color: #1a1a1a;
     padding: 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-weight: bolder;
 }
 
-#login-form button:hover {
+#login-form button:hover, #miButton:hover {
     background-color: #e91e63; /* Color rosa oscuro */
 }
 
