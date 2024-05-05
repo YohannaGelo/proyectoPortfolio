@@ -1,9 +1,11 @@
 <%-- 
     Document   : procesar_comentarios
     Created on : 01-may-2024, 13:29:39
-    Author     : yohan
+    Author     : Yohanna Gelo
 --%>
 
+<%@page import="clases.Feedback"%>
+<%@page import="java.time.LocalDateTime"%>
 <%@ page import="java.sql.*" %>
 <%@ page import="javax.servlet.*" %>
 <%@ page import="javax.servlet.http.*" %>
@@ -19,10 +21,13 @@
     <body>
         <%
             // Obtener los datos del formulario
-            String proyecto_id = request.getParameter("proyecto_id");
+            //String proyecto_id = request.getParameter("proyecto_id");
             String username = (String) session.getAttribute("username");
             String proyecto_url = request.getParameter("proyecto_url");
-            String feedback = request.getParameter("feedback");
+            String comentario = request.getParameter("feedback");
+
+            // Crear una instancia de Feedback con los datos del formulario
+            Feedback feedback = new Feedback(username, proyecto_url, comentario);
 
             // Conectar a la base de datos
             Connection conexion = null;
@@ -32,14 +37,14 @@
                 conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/portfolio", "root", "");
 
                 // Insertar el comentario en la base de datos
-                String sql = "INSERT INTO comentarios (id, username, url, comentario, fecha) VALUES (NULL, ?, ?, ?, CURRENT_TIMESTAMP)";
+                String sql = "INSERT INTO comentarios (id, username, url, comentario, fecha) VALUES (NULL, ?, ?, ?, ?)";
                 stmt = conexion.prepareStatement(sql);
                 //stmt.setInt(1, Integer.parseInt(proyecto_id));
                 stmt.setString(1, username);
                 stmt.setString(2, proyecto_url);
-                stmt.setString(3, feedback);
-
-
+                stmt.setString(3, comentario);
+                // Usa feedbackDate como un valor de Timestamp para la fecha
+                stmt.setTimestamp(4, Timestamp.valueOf(feedback.getFeedbackDate()));
 
                 // Ejecutar la sentencia de inserción
                 int filasAfectadas = stmt.executeUpdate();

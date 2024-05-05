@@ -5,9 +5,6 @@
 --%>
 
 
-<%@page import="clases.metodosAuxiliares"%>
-<%@page import="java.util.Map"%>
-<%@page import="java.util.Map.Entry"%>
 <%@page import="java.security.Timestamp"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="java.util.Collections"%>
@@ -105,97 +102,69 @@
                     // Consulta con Left Join para tomar toda la tabla de proyectos Web y solo los comentarios que tengan la url del proyecto
                     ResultSet listado = s.executeQuery(
                             //"SELECT * FROM proyectosWeb p LEFT JOIN comentarios c ON p.url = c.url"
-                            "SELECT p.nombreProyecto, p.url, p.img, c.id, c.username, c.comentario, c.fecha "
-                            + "FROM proyectosweb p "
+                            "SELECT p.url, p.nombreProyecto, p.img, c.id, c.username, c.comentario, c.fecha "
+                            + "FROM proyectosWeb p "
                             + "LEFT JOIN comentarios c ON p.url = c.url"
                     );
 
                     // Estructura para agrupar comentarios de proyectos
                     HashMap<String, ArrayList<Feedback>> comentariosPorProyecto = new HashMap<String, ArrayList<Feedback>>();
 
-                    int id;
-
                     while (listado.next()) {
 
                         String url = listado.getString("url");
 
-                        // Verifica si el url es null antes de proceder
-                        if (url == null || url.isEmpty()) {
-                            continue; // Si el url es null, continúa con la siguiente iteración
-                        }
-
                         // Crea un nuevo objeto Feedback con los datos de la consulta
-                        id = listado.getInt("id");
+                        int id = listado.getInt("id");
                         String usernameCons = listado.getString("username");
                         String comentario = listado.getString("comentario");
                         LocalDateTime fecha = listado.getTimestamp("fecha").toLocalDateTime();
 
-                        if (url != null) {
-                            // Crea un objeto Feedback
-                            Feedback feedback = new Feedback(usernameCons, url, comentario, fecha);
 
-                            // Agrega el objeto Feedback a la lista de comentarios del proyecto, o crea la lista si no existe
-                            ArrayList<Feedback> listaComentarios;
-                            if (comentariosPorProyecto.containsKey(url)) {
-                                listaComentarios = comentariosPorProyecto.get(url);
-                            } else {
-                                listaComentarios = new ArrayList<Feedback>();
-                                comentariosPorProyecto.put(url, listaComentarios);
-                            }
+                        // Crea un objeto Feedback
+                        Feedback feedback = new Feedback(usernameCons, url, comentario, fecha);
 
-                            // Agrega el objeto Feedback a la lista de comentarios del proyecto
-                            listaComentarios.add(feedback);
+                        // Agrega el objeto Feedback a la lista de comentarios del proyecto, o crea la lista si no existe
+                        ArrayList<Feedback> listaComentarios;
+                        if (comentariosPorProyecto.containsKey(url)) {
+                            listaComentarios = comentariosPorProyecto.get(url);
+                        } else {
+                            listaComentarios = new ArrayList<Feedback>();
+                            comentariosPorProyecto.put(url, listaComentarios);
                         }
-                    }
 
-                    for (Map.Entry<String, ArrayList<Feedback>> entry : comentariosPorProyecto.entrySet()) {
-                        String url = entry.getKey();
-                        ArrayList<Feedback> valueComentario = entry.getValue();
-
-                        out.print("url: " + url + "Comentarios: " + valueComentario);
-
-                    }
-
-                    for (Map.Entry<String, ArrayList<Feedback>> entry : comentariosPorProyecto.entrySet()) {
-                        String url = entry.getKey();
-                        ArrayList<Feedback> valueComentario = entry.getValue();
+                        // Agrega el objeto Feedback a la lista de comentarios del proyecto
+                        listaComentarios.add(feedback);
 
                         // Crea un div para cada proyecto
                         out.println("<div class='project-container'>");
 
-                        // Obtener el nombre del proyecto
-                        String nombreProyecto = metodosAuxiliares.nombrePorUrl(url);
-
                         // Enlaces en el título del proyecto. Usa target blank para abrirse en una nueva pestaña
-                        out.println("<a href='" + url + "' class='link' target='_blank'>Pincha aquí o en la imágen para ver completo el proyecto " + nombreProyecto + "</a>");
-
-                        // Obtener la imagen por la url
-                        InputStream imagenStream = metodosAuxiliares.imgPorUrl(url);
+                        out.println("<a href='" + listado.getString("url") + "' class='link' target='_blank'>Pincha aquí o en la imágen para ver completo el proyecto " + listado.getString("nombreProyecto") + "</a>");
 
                         // Obtener la imagen de la base de datos como InputStream
-                        //InputStream imagenStream = listado.getBinaryStream("img");
-                        if (imagenStream != null) {
-                            // Leer el contenido de la imagen y codificarla en base64
-                            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                            byte[] buffer = new byte[1024];
-                            int bytesRead;
-                            while ((bytesRead = imagenStream.read(buffer)) != -1) {
-                                byteArrayOutputStream.write(buffer, 0, bytesRead);
-                            }
+                        InputStream imagenStream = listado.getBinaryStream("img");
 
-                            byte[] imageBytes = byteArrayOutputStream.toByteArray();
-                            String base64Image = java.util.Base64.getEncoder().encodeToString(imageBytes);
-
-                            // Renderizar la imagen en HTML como un elemento <img>
-                            out.println("<br>");
-                            out.println("<a href='" + url + "' target='_blank'>");
-                            out.println("<img src=\"data:image/jpeg;base64," + base64Image + "\" alt=\"Imagen del socio\" class=\"imgProyectWeb\">");
-                            out.println("</a>");
-
-                            // Cerrar el InputStream y el ByteArrayOutputStream
-                            imagenStream.close();
-                            byteArrayOutputStream.close();
+                        // Leer el contenido de la imagen y codificarla en base64
+                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                        byte[] buffer = new byte[1024];
+                        int bytesRead;
+                        while ((bytesRead = imagenStream.read(buffer)) != -1) {
+                            byteArrayOutputStream.write(buffer, 0, bytesRead);
                         }
+
+                        byte[] imageBytes = byteArrayOutputStream.toByteArray();
+                        String base64Image = java.util.Base64.getEncoder().encodeToString(imageBytes);
+
+                        // Renderizar la imagen en HTML como un elemento <img>
+                        out.println("<br>");
+                        out.println("<a href='" + listado.getString("url") + "' target='_blank'>");
+                        out.println("<img src=\"data:image/jpeg;base64," + base64Image + "\" alt=\"Imagen del socio\" class=\"imgProyectWeb\">");
+                        out.println("</a>");
+
+                        // Cerrar el InputStream y el ByteArrayOutputStream
+                        imagenStream.close();
+                        byteArrayOutputStream.close();
 
                         out.println("<br>");
 
@@ -228,25 +197,23 @@
                                 String order = request.getParameter("order");
 
                                 // Recupera la lista de comentarios para el proyecto actual
-                                //ArrayList<Feedback> comentarios = comentariosPorProyecto.get(url);
+                                ArrayList<Feedback> comentarios = comentariosPorProyecto.get(url);
 
                                 // Si el parámetro 'order' está presente, ordena la lista de comentarios
-                                if (order != null && valueComentario != null) {
-                                    if (order.equalsIgnoreCase("asc")) {
-                                        // Ordena la lista de comentarios en orden ascendente
-                                        Collections.sort(valueComentario);
-                                    } else if (order.equalsIgnoreCase("desc")) {
-                                        // Ordena la lista de comentarios en orden descendente
-                                        Collections.sort(valueComentario, Collections.reverseOrder());
+                                if (order != null && comentarios != null) {
+                                    if (order.equals("asc")) {
+                                        Collections.sort(comentarios);
+                                    } else if (order.equals("desc")) {
+                                        Collections.sort(comentarios, Collections.reverseOrder());
                                     }
                                 }
-
                                 // Si hay comentarios, los irá mostrando, además lo hará desde el array de objetos Feedback para poder ordenarlos de foma ascendente / descendente
-                                if (valueComentario != null && !valueComentario.isEmpty()) {
-                                    
+                                if (listado.getString("username") != null && listado.getString("comentario") != null && listado.getString("fecha") != null) {
+                                    //ArrayList<Feedback> comentarios = comentariosPorProyecto.get(url);
 
+                                    if (comentarios != null && !comentarios.isEmpty()) {
                                         // Muestra los comentarios ordenados
-                                        for (Feedback f : valueComentario) {
+                                        for (Feedback f : comentarios) {
                                             out.println("<div class='comentario'>");
 
                                             // Muestra el comentario
@@ -268,19 +235,17 @@
 
                                             out.println("</div>");
                                         }
-                                    
-
-                                    out.println("<hr>");
-                                    out.println("</div>");
+                                    }
                                 }
-
+                                out.println("<hr>");
                                 out.println("</div>");
-
                             }
+
+                            out.println("</div>");
+
                         }
 
                         conexion.close();
-
                     %>
 
 
