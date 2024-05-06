@@ -57,7 +57,8 @@ public class metodosAuxiliares {
 
     }
     
-        // DESENCRIPTAR
+    
+    // Obtener nombre a través de la url
     public static String nombrePorUrl(String url) throws SQLException  {
 
          String nombreProyecto = null;

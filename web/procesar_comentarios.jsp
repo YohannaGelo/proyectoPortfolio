@@ -46,6 +46,9 @@
                 // Usa feedbackDate como un valor de Timestamp para la fecha
                 stmt.setTimestamp(4, Timestamp.valueOf(feedback.getFeedbackDate()));
 
+                // Insertar el comentario en el array del proyecto
+                
+                
                 // Ejecutar la sentencia de inserción
                 int filasAfectadas = stmt.executeUpdate();
 

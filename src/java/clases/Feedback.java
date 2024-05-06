@@ -64,9 +64,6 @@ public class Feedback implements Comparable<Feedback> {
         this.feedbackDate = feedbackDate;
     }
     
-    
-    
-    
 
     // MÉTODOS
     @Override

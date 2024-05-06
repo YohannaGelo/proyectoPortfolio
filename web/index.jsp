@@ -71,6 +71,10 @@
                             // Si el usuario no ha iniciado sesión, muestra el enlace de "Login"
                             out.print("<a href='' id='log'>Login</a>");
                         }
+                        
+                        // Instancio mi objeto padre para poder trabajar con él 
+                        Portfolio miPortfolio = new Portfolio();
+
                     %>
                 </li>
             </ul>
