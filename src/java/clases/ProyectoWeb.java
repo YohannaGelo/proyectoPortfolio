@@ -33,6 +33,16 @@ public class ProyectoWeb extends Portfolio {
         this.img = img;
         feedbackPorProyecto = new ArrayList<Feedback>();
     }
+    
+    // ToString
+
+    @Override
+    public String toString() {
+        return "ProyectoWeb{" + "nombreProyecto=" + nombreProyecto + ", url=" + url + ", comentarios=" + feedbackPorProyecto.toString() +
+            '}';
+    }
+    
+    
 
     // GETTERs y/o SETTERs
     public String getNombreProyecto() {
@@ -50,6 +60,30 @@ public class ProyectoWeb extends Portfolio {
     public ArrayList<Feedback> getFeedbackPorProyecto() {
         return feedbackPorProyecto;
     }
+
+//    
+//    // Obtener nombre a través de la url
+//    public static String crearProyecto (String url) throws SQLException  {
+//
+//         String nombreProyecto = null;
+//
+//        // Consulta SQL para obtener el nombre del proyecto basado en la URL
+//        String sql = "SELECT * FROM proyectosWeb";
+//
+//        try (Connection conexion = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+//             PreparedStatement statement = conexion.prepareStatement(sql)) {
+//            statement.setString(1, url);
+//            ResultSet rs = statement.executeQuery();
+//
+//            if (rs.next()) {
+//                nombreProyecto = rs.getString("nombreProyecto");
+//            }
+//        }
+//
+//        return nombreProyecto;
+//
+//    }
+    
 
 
 

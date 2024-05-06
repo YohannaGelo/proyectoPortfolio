@@ -4,6 +4,7 @@
     Author     : Yohanna Gelo
 --%>
 
+<%@page import="clases.Portfolio"%>
 <%@page import="clases.Feedback"%>
 <%@page import="java.time.LocalDateTime"%>
 <%@ page import="java.sql.*" %>
@@ -21,7 +22,7 @@
     <body>
         <%
             // Obtener los datos del formulario
-            //String proyecto_id = request.getParameter("proyecto_id");
+            String proyecto_id = request.getParameter("proyecto_id");
             String username = (String) session.getAttribute("username");
             String proyecto_url = request.getParameter("proyecto_url");
             String comentario = request.getParameter("feedback");
@@ -46,13 +47,13 @@
                 // Usa feedbackDate como un valor de Timestamp para la fecha
                 stmt.setTimestamp(4, Timestamp.valueOf(feedback.getFeedbackDate()));
 
-                // Insertar el comentario en el array del proyecto
-                
-                
                 // Ejecutar la sentencia de inserción
                 int filasAfectadas = stmt.executeUpdate();
 
                 if (filasAfectadas > 0) {
+                    // Cargo mi objeto portfolio
+                    Portfolio miPortfolio = (Portfolio) application.getAttribute("portfolio");
+
                     // Redirigir a la página del proyecto
                     response.sendRedirect("pages/proyectosWeb.jsp");
                 } else {

@@ -4,6 +4,9 @@
     Author     : Yohanna Gelo
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="clases.ProyectoWeb"%>
+<%@page import="clases.Portfolio"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@ page import="javax.servlet.http.HttpServletRequest" %>
@@ -71,9 +74,6 @@
                             // Si el usuario no ha iniciado sesión, muestra el enlace de "Login"
                             out.print("<a href='' id='log'>Login</a>");
                         }
-                        
-                        // Instancio mi objeto padre para poder trabajar con él 
-                        Portfolio miPortfolio = new Portfolio();
 
                     %>
                 </li>
@@ -102,6 +102,12 @@
         </div>
 
         <!-- CONTENIDO DE LA PÁGINA -->
+
+        <%
+
+
+
+        %>
 
         <!-- Sección de previsualizador -->
         <section id="previsualizador">

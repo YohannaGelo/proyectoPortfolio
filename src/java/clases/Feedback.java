@@ -31,13 +31,22 @@ public class Feedback implements Comparable<Feedback> {
         this.feedbackDate = LocalDateTime.now();
     }
     
-        public Feedback(String username, String url, String comentario, LocalDateTime feedbackDate) {
+    public Feedback(int id, String username, String url, String comentario, LocalDateTime feedbackDate) {
+        this.id = id;
         this.username = username;
         this.url = url;
         this.comentario = comentario;
         // Establece la fecha y hora de la creación como fecha del feedback
         this.feedbackDate = feedbackDate;
     }
+
+    @Override
+    public String toString() {
+        return "Feedback{" + "id=" + id + ", username=" + username + ", url=" + url + ", comentario=" + comentario + ", feedbackDate=" + feedbackDate + '}';
+    }
+        
+        
+        
 
     // GETTERs y/o SETTERs
     public int getId() {
@@ -98,5 +107,7 @@ public class Feedback implements Comparable<Feedback> {
         // Usa el método compareTo de LocalDateTime para comparar las fechas
         return this.feedbackDate.compareTo(otherFeedback.feedbackDate);
     }
+    
+    
 
 }

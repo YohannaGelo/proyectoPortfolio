@@ -5,14 +5,12 @@
 --%>
 
 
-<%@page import="java.security.Timestamp"%>
-<%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="java.util.Collections"%>
-<%@page import="java.time.LocalDateTime"%>
-<%@page import="java.util.List"%>
-<%@page import="java.util.HashMap"%>
-<%@page import="clases.Feedback"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="clases.Portfolio"%>
+<%@page import="clases.ProyectoWeb"%>
+<%@page import="clases.Feedback"%>
+<%@page import="java.time.LocalDateTime"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.io.InputStream"%>
@@ -27,7 +25,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Yohanna Gelo</title>
-        <link rel="stylesheet" type="text/css" href="../cssGelo/css_index.css">
+        <link rel="stylesheet" type="text/css" href="../css/css_index.css">
         <link rel="icon" href="img/favicon.png" type="image/x-icon">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bad+Script&display=swap">
 
@@ -95,11 +93,10 @@
             <h2>Proyectos web</h2>
             <div class="proyecto" id="paginas-web">
                 <%
-                    Class.forName("com.mysql.jdbc.Driver");
+                    Class.forName("com.mysql.cj.jdbc.Driver");  // Nuevo controlador
                     Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/portfolio", "root", "");
                     Statement s = conexion.createStatement();
                     //ResultSet listado = s.executeQuery("SELECT * FROM proyectosWeb");
-                    // Consulta con Left Join para tomar toda la tabla de proyectos Web y solo los comentarios que tengan la url del proyecto
                     ResultSet listado = s.executeQuery(
                             //"SELECT * FROM proyectosWeb p LEFT JOIN comentarios c ON p.url = c.url"
                             "SELECT p.url, p.nombreProyecto, p.img, c.id, c.username, c.comentario, c.fecha "
@@ -107,44 +104,68 @@
                             + "LEFT JOIN comentarios c ON p.url = c.url"
                     );
 
-                    // Estructura para agrupar comentarios de proyectos
-                    HashMap<String, ArrayList<Feedback>> comentariosPorProyecto = new HashMap<String, ArrayList<Feedback>>();
+                    // Instancio miPortfolio en ámbito de aplicación para trabajar con él desde cualquier lugar
+                    Portfolio miPortfolio = new Portfolio();
+                    //application.setAttribute("portfolio", miPortfolio);
+
+                    // Relleno el array con los proyectos
+                    miPortfolio.crearProyectos();
+
+                    // Creo ese array
+                    ArrayList<ProyectoWeb> proyectos = miPortfolio.getListaProyectos();
+                    // Crea un objeto Feedback
+                    Feedback feedback = null;
 
                     while (listado.next()) {
 
                         String url = listado.getString("url");
 
                         // Crea un nuevo objeto Feedback con los datos de la consulta
-                        int id = listado.getInt("id");
-                        String usernameCons = listado.getString("username");
-                        String comentario = listado.getString("comentario");
-                        LocalDateTime fecha = listado.getTimestamp("fecha").toLocalDateTime();
+                        if (listado.getObject("id") != null) {
+                            int id = listado.getInt("id");
+                            String usernameCons = listado.getString("username");
+                            String comentario = listado.getString("comentario");
+                            LocalDateTime fecha = listado.getTimestamp("fecha").toLocalDateTime();
 
-
-                        // Crea un objeto Feedback
-                        Feedback feedback = new Feedback(usernameCons, url, comentario, fecha);
-
-                        // Agrega el objeto Feedback a la lista de comentarios del proyecto, o crea la lista si no existe
-                        ArrayList<Feedback> listaComentarios;
-                        if (comentariosPorProyecto.containsKey(url)) {
-                            listaComentarios = comentariosPorProyecto.get(url);
-                        } else {
-                            listaComentarios = new ArrayList<Feedback>();
-                            comentariosPorProyecto.put(url, listaComentarios);
+                            // Da valor al feedback
+                            feedback = new Feedback(usernameCons, url, comentario, fecha);
                         }
 
-                        // Agrega el objeto Feedback a la lista de comentarios del proyecto
-                        listaComentarios.add(feedback);
+                        // Busca el proyecto correspondiente en la lista de proyectos
+                        ProyectoWeb proyecto = null;
+                        for (ProyectoWeb proy : proyectos) {
+                            if (proy.getUrl().equals(url)) {
+                                proyecto = proy;
+                                break;
+                            }
+                        }
 
+                        // Si no se encontró el proyecto, crea uno nuevo
+                        if (proyecto == null) {
+                            // Coge los datos necesarios de la consulta y crea el proyecto
+                            String nombreProyecto = listado.getString("nombreProyecto");
+                            InputStream imagenStream = listado.getBinaryStream("img");
+                            proyecto = new ProyectoWeb(nombreProyecto, url, imagenStream);
+                            proyectos.add(proyecto);
+                        }
+
+                        // Agrega el comentario a la lista de comentarios del proyecto
+                        if (feedback != null) {
+                            proyecto.getFeedbackPorProyecto().add(feedback);
+                        }
+
+                    }
+
+                    // Recorre el array proyectos y va mostrando la información
+                    for (ProyectoWeb proy : proyectos) {
                         // Crea un div para cada proyecto
                         out.println("<div class='project-container'>");
 
                         // Enlaces en el título del proyecto. Usa target blank para abrirse en una nueva pestaña
-                        out.println("<a href='" + listado.getString("url") + "' class='link' target='_blank'>Pincha aquí o en la imágen para ver completo el proyecto " + listado.getString("nombreProyecto") + "</a>");
+                        out.println("<a href='" + proy.getUrl() + "' class='link' target='_blank'>Pincha aquí o en la imágen para ver completo el proyecto " + proy.getNombreProyecto() + "</a>");
 
                         // Obtener la imagen de la base de datos como InputStream
-                        InputStream imagenStream = listado.getBinaryStream("img");
-
+                        InputStream imagenStream = proy.getImg();
                         // Leer el contenido de la imagen y codificarla en base64
                         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                         byte[] buffer = new byte[1024];
@@ -158,7 +179,7 @@
 
                         // Renderizar la imagen en HTML como un elemento <img>
                         out.println("<br>");
-                        out.println("<a href='" + listado.getString("url") + "' target='_blank'>");
+                        out.println("<a href='" + proy.getUrl() + "' target='_blank'>");
                         out.println("<img src=\"data:image/jpeg;base64," + base64Image + "\" alt=\"Imagen del socio\" class=\"imgProyectWeb\">");
                         out.println("</a>");
 
@@ -168,15 +189,17 @@
 
                         out.println("<br>");
 
-                        // Revisa si hay un usuario registrado, en caso de que lo haya muestra la zona de comentarios / feedbaks
                         if (username != null) {
 
-                %>
+                            // Obtiene la lista de comentarios del proyecto
+                            ArrayList<Feedback> comentarios = proy.getFeedbackPorProyecto();
 
+
+                %>
                 <div class="divComentarios">
                     <form action="../procesar_comentarios.jsp" method="POST" id="feedback">
-                        <input type="hidden" name="proyecto_id" value="<%= listado.getInt("id")%>">
-                        <input type="hidden" name="proyecto_url" value="<%= listado.getString("url")%>">
+                        <input type="hidden" name="proyecto_id" value="<%= proy.getUrl()%>">
+                        <input type="hidden" name="proyecto_url" value="<%= proy.getUrl()%>">
                         <textarea id="feedback_area" name="feedback" placeholder="Escribe tu feedback aquí..." required></textarea><br>
                         <button type="submit">Enviar feedback</button>
                     </form>
@@ -191,69 +214,99 @@
                         </select>
                         <input type="submit" value="Ordenar">
                     </form>
-                    <%
+                </div>
+                <%
 
-                                // Recupera el parámetro 'order' de la solicitud
-                                String order = request.getParameter("order");
+                    // Recupera el parámetro 'order' de la solicitud
+                    String order = request.getParameter("order");
 
-                                // Recupera la lista de comentarios para el proyecto actual
-                                ArrayList<Feedback> comentarios = comentariosPorProyecto.get(url);
+                    // Si el parámetro 'order' está presente, ordena la lista de comentarios
+                    if (order != null && comentarios != null) {
+                        if (order.equals("asc")) {
+                            Collections.sort(comentarios);
+                        } else if (order.equals("desc")) {
+                            Collections.sort(comentarios, Collections.reverseOrder());
+                        }
+                    }
 
-                                // Si el parámetro 'order' está presente, ordena la lista de comentarios
-                                if (order != null && comentarios != null) {
-                                    if (order.equals("asc")) {
-                                        Collections.sort(comentarios);
-                                    } else if (order.equals("desc")) {
-                                        Collections.sort(comentarios, Collections.reverseOrder());
-                                    }
-                                }
-                                // Si hay comentarios, los irá mostrando, además lo hará desde el array de objetos Feedback para poder ordenarlos de foma ascendente / descendente
-                                if (listado.getString("username") != null && listado.getString("comentario") != null && listado.getString("fecha") != null) {
-                                    //ArrayList<Feedback> comentarios = comentariosPorProyecto.get(url);
+                    // Recorre la lista de comentarios de este proyecto
+                    for (Feedback coment : comentarios) {
 
-                                    if (comentarios != null && !comentarios.isEmpty()) {
-                                        // Muestra los comentarios ordenados
-                                        for (Feedback f : comentarios) {
-                                            out.println("<div class='comentario'>");
+                        // Si hay comentario, lo muestra
+                        if (comentarios != null && !comentarios.isEmpty()) {
+                            //if (listado.getString("username") != null && listado.getString("comentario") != null && listado.getString("fecha") != null) {
+                            // Título de la sección de comentarios
+                            out.println("<div class='divComentarios'>");
 
-                                            // Muestra el comentario
-                                            out.println("<p>" + f.getComentario() + "</p>");
+                            // Crear un contenedor para cada comentario
+                            out.println("<div class='comentario'>");
 
-                                            // Muestra el nombre de usuario
-                                            out.println("<p><small><strong>Usuario:</strong> " + f.getUsername() + "</small></p>");
+                            // Mostrar el comentario
+                            out.println("<p>" + coment.getComentario() + "</p>");
 
-                                            // Muestra la fecha del comentario
-                                            out.println("<p><small><strong>Fecha:</strong> " + f.getFeedbackDate() + "</small></p>");
+                            // Mostrar el nombre de usuario
+                            out.println("<p><small><strong>Usuario:</strong> " + coment.getUsername());
 
-                                            // Si el comentario es del usuario logueado, muestra el botón de eliminación
-                                            if (f.getUsername().equals(username)) {
-                                                out.println("<form action='../eliminarFeedback.jsp' method='POST'>");
-                                                out.println("<input type='hidden' name='comentario_id' value='" + f.getId() + "'>");
-                                                out.println("<button type='submit' class='deleteButton'><img src='../img/papelera3.png' alt='Borrar Feedback' id='iconBorrarFeedback' /></button>");
-                                                out.println("</form>");
-                                            }
+                            // Mostrar la fecha del comentario
+                            out.println(" <strong>Fecha de registro:</strong> " + coment.getFeedbackDate() + "</small></p>");
 
-                                            out.println("</div>");
-                                        }
-                                    }
-                                }
-                                out.println("<hr>");
-                                out.println("</div>");
+                            // Si el comentario es del usuario registrado, podrá eliminarlo
+                            if (coment.getUsername() != null && coment.getUsername().equals(username)) {
+                                // Mostrar el formulario de eliminación
+                                out.println("<form action='../eliminarFeedback.jsp' method='POST'>");
+                                // Campo oculto para el identificador del comentario
+                                out.println("<input type='hidden' name='comentario_id' value='" + coment.getId() + "'>");
+                                // Botón de eliminación
+                                out.println("<button type='submit' class='deleteButton' ><img src='../img/papelera3.png' alt='Borrar Feedback' id='iconBorrarFeedback'/></button>");
+                                out.println("</form>");
                             }
 
                             out.println("</div>");
-
                         }
+                        out.println("<hr>");
 
+                %> 
+
+            </div> 
+
+            <%                            }   // Fin for (comentarios)
+
+                    }  // Fin if (usuario logueado)
+
+                    out.println("</div>");  // Cierre div project-container
+
+                }  // Fin for (proyectos)
+
+                // Cierra los recursos
+                if (listado != null) {
+                    try {
+                        listado.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (s != null) {
+                    try {
+                        s.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (conexion != null) {
+                    try {
                         conexion.close();
-                    %>
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            %>
 
 
-                </div>
+            </div>
         </section>
 
     </center>
     <!-- Enlace al archivo que contiene el código de javascript -->
-    <script src="../jsGelo/js_index.js"></script>
+    <script src="../js/js_index.js"></script>
 </body>
 </html>

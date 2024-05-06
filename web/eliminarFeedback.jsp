@@ -4,6 +4,7 @@
     Author     : Yohanna Gelo
 --%>
 
+<%@page import="clases.Portfolio"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
@@ -16,6 +17,8 @@
     </head>
     <body>
         <%
+
+
             // Obtener el identificador del comentario del formulario
             String comentario_id = request.getParameter("comentario_id");
 
