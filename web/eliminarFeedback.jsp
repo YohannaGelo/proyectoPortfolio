@@ -18,7 +18,6 @@
     <body>
         <%
 
-
             // Obtener el identificador del comentario del formulario
             String comentario_id = request.getParameter("comentario_id");
 
@@ -35,8 +34,20 @@
                 stmt.setInt(1, Integer.parseInt(comentario_id));
                 stmt.executeUpdate();
 
-                // Redirigir a la página de comentarios
-                response.sendRedirect("pages/proyectosWeb.jsp");
+                // Obtener la URL de la página anterior
+                String referer = request.getHeader("Referer");
+
+                
+                // Verificar si la URL de referencia está disponible
+                if (referer != null) {
+                    // Redirigir al usuario a la página anterior
+                    response.sendRedirect(referer);
+                } else {
+                    // Si hay error redirige al inicio
+                    response.sendRedirect("pages/index.jsp");
+                }
+                
+                
             } catch (Exception e) {
                 e.printStackTrace();
                 out.println("<p>Hubo un error al eliminar el comentario. Por favor, inténtelo de nuevo.</p>");

@@ -128,6 +128,17 @@ nav ul li a:hover {
     cursor: pointer;
 }
 
+
+.iframe-img-container {
+    display: flex;
+    gap: 2em; 
+}
+
+.verCodigo {
+    border: 2px solid #f0f0f0;
+}
+
+
 .link {
     text-decoration: none;
     font-size: 22px;

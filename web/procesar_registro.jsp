@@ -55,8 +55,18 @@
                     // Almacenar un mensaje de alerta en la sesión
                     session.setAttribute("alertMessage", "Registro exitoso. ¡Bienvenido!");
 
-                    // Redirigir a index.jsp
-                    response.sendRedirect("index.jsp");
+
+                    // Obtener la URL de la página anterior
+                    String referer = request.getHeader("Referer");
+
+                    // Verificar si la URL de referencia está disponible
+                    if (referer != null) {
+                        // Redirigir al usuario a la página anterior
+                        response.sendRedirect(referer);
+                    } else {
+                        // Si hay error redirige al inicio
+                        response.sendRedirect("pages/index.jsp");
+                    }
 
                     // Si el registro es exitoso, redirigir a index.jsp y mostrar un mensaje de alerta
                     //out.println("<script>");
@@ -69,7 +79,6 @@
 
                     // Redirigir a index.jsp
                     //response.sendRedirect("index.jsp");
-
                     //out.println("<p>No se pudo completar el registro. Por favor, inténtelo de nuevo.</p>");
                 }
 

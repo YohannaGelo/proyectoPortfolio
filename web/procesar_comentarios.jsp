@@ -54,8 +54,17 @@
                     // Cargo mi objeto portfolio
                     Portfolio miPortfolio = (Portfolio) application.getAttribute("portfolio");
 
-                    // Redirigir a la página del proyecto
-                    response.sendRedirect("pages/proyectosWeb.jsp");
+                    // Obtener la URL de la página anterior
+                    String referer = request.getHeader("Referer");
+
+                    // Verificar si la URL de referencia está disponible
+                    if (referer != null) {
+                        // Redirigir al usuario a la página anterior
+                        response.sendRedirect(referer);
+                    } else {
+                        // Si hay error redirige al inicio
+                        response.sendRedirect("pages/index.jsp");
+                    }
                 } else {
                     out.println("<p>Hubo un problema al guardar el comentario. Inténtalo de nuevo.</p>");
                 }

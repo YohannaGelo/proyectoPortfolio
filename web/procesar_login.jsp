@@ -65,8 +65,20 @@
                         // Guardar los datos actualizados
                         visita.guardarDatos();
 
-                        // Redirige a la página de inicio
-                        response.sendRedirect("index.jsp");
+                        
+                        // Obtener la URL de la página anterior
+                        String referer = request.getHeader("Referer");
+
+                        // Verificar si la URL de referencia está disponible
+                        if (referer != null) {
+                            // Redirigir al usuario a la página anterior
+                            response.sendRedirect(referer);
+                        } else {
+                            // Si hay error redirige al inicio
+                            response.sendRedirect("pages/index.jsp");
+                        }
+                        
+
                         // Las credenciales son válidas, muestra mensaje
                         out.println("<script>");
                         out.println("window.location.href = 'index.jsp';");

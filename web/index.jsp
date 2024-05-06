@@ -62,7 +62,7 @@
                 <li><a href="">Diseños Gráficos</a></li>
                 <li><a href="pages/proyectosWeb.jsp">Proyectos Web</a></li>
                 <li><a href="">Documentos</a></li>
-                <li><a href="">Códigos</a></li>
+                <li><a href="pages/codigo.jsp">Códigos</a></li>
                 <li><a href="">Contacto</a></li>
                 <li class="userLogin">
                     <%
