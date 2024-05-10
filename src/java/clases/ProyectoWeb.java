@@ -18,49 +18,58 @@ import java.util.ArrayList;
  *
  * @author Yohanna Gelo
  */
-public class ProyectoWeb extends Portfolio {
+public class ProyectoWeb extends Proyecto{
 
     // Atributos
-    private String nombreProyecto;
-    private String url;
-    private InputStream img;
     private ArrayList<Feedback> feedbackPorProyecto;
 
     // Construtor
-    public ProyectoWeb(String nombreProyecto, String url, InputStream img) {
-        this.nombreProyecto = nombreProyecto;
-        this.url = url;
-        this.img = img;
+    public ProyectoWeb(String nombre, String url, InputStream img) {    
+        super(nombre, url, img);
         feedbackPorProyecto = new ArrayList<Feedback>();
     }
-    
-    // ToString
 
+    // ToString
     @Override
     public String toString() {
-        return "ProyectoWeb{" + "nombreProyecto=" + nombreProyecto + ", url=" + url + ", comentarios=" + feedbackPorProyecto.toString() +
-            '}';
+        return super.toString() + "ProyectoWeb{" + "feedbackPorProyecto=" + feedbackPorProyecto + '}';
     }
-    
-    
+
 
     // GETTERs y/o SETTERs
-    public String getNombreProyecto() {
-        return nombreProyecto;
+    public ArrayList<Feedback> getFeedbackPorProyecto() {
+        return feedbackPorProyecto;
+    }
+
+    public void setFeedbackPorProyecto(ArrayList<Feedback> feedbackPorProyecto) {
+        this.feedbackPorProyecto = feedbackPorProyecto;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getUrl() {
         return url;
     }
 
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public InputStream getImg() {
         return img;
     }
 
-    public ArrayList<Feedback> getFeedbackPorProyecto() {
-        return feedbackPorProyecto;
+    public void setImg(InputStream img) {
+        this.img = img;
     }
-
+    
+   
 //    
 //    // Obtener nombre a través de la url
 //    public static String crearProyecto (String url) throws SQLException  {
@@ -83,8 +92,6 @@ public class ProyectoWeb extends Portfolio {
 //        return nombreProyecto;
 //
 //    }
-    
-
 
 
 }

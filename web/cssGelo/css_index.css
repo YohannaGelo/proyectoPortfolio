@@ -14,8 +14,14 @@ and open the template in the editor.
     /* para inserta una fuente descargada */
     font-family: 'ephesis';
     /* Nombre de la fuente */
-    src: url('font/Ephesis-Regular.ttf') format('truetype');
+    src: url('../font/Ephesis-Regular.ttf?v=1.1') format('truetype');
     /* Ruta de la fuente */
+}
+
+/* Fuentes usadas */
+@font-face {
+    font-family: 'Bad Script';
+    src: url('../font/BadScript-Regular.ttf') format('truetype');
 }
 
 
@@ -131,7 +137,7 @@ nav ul li a:hover {
 
 .iframe-img-container {
     display: flex;
-    gap: 2em; 
+    gap: 30px; 
 }
 
 .verCodigo {

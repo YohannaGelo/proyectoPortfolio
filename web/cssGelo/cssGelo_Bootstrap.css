@@ -13,8 +13,14 @@ and open the template in the editor.
     /* para inserta una fuente descargada */
     font-family: 'ephesis';
     /* Nombre de la fuente */
-    src: url('font/Ephesis-Regular.ttf') format('truetype');
+    src: url('../font/Ephesis-Regular.ttf?v=1.1') format('truetype');
     /* Ruta de la fuente */
+}
+
+/* Fuentes usadas */
+@font-face {
+    font-family: 'Bad Script';
+    src: url('../font/BadScript-Regular.ttf') format('truetype');
 }
 
 
@@ -45,51 +51,58 @@ h2 {
     font-weight: bolder;
 }
 
-/* Menú de navegación */
-nav {
-    background-color: #333;
-    padding: 15px 10px;
+/* Menú de navegación - Estilos extras a Bootstrap*/
+nav.navbar {
+    background-color: #333; /* Color de fondo del menú */
+    padding: 15px 10px; 
 }
 
-nav ul {
-    list-style: none;
+nav ul.navbar-nav {
+    list-style: none; 
     padding: 0;
     margin: 0;
-    display: flex;
+    display: flex; /* Los elementos de la lista se alinean en línea */
 }
 
-nav ul li {
-    margin-right: 20px;
+nav ul.navbar-nav li.nav-item {
+    margin-right: 20px; /* Espaciado entre elementos de la lista */
 }
 
-nav ul li a {
+nav ul.navbar-nav li.nav-item a.nav-link,
+nav ul.navbar-nav li.nav-item a.nav-link:hover {
     color: #f0f0f0;
-    text-decoration: none;
+    text-decoration: none; 
     font-weight: bold;
-    margin: 0 1em 0 1em;
-    font-size: 26px;
+    margin: 0 1em; 
+    font-size: 26px; 
+    text-align: center;
 }
 
-.userLogin {
-    color: #f0f0f0;
-    text-decoration: none;
-    font-weight: bold;
-    margin: 0 1em 0 1em;
-    font-size: 26px;
+nav ul.navbar-nav li.nav-item a.nav-link:hover {
+    color: #f48fb1; /* Color rosa al pasar el cursor */
 }
 
-nav ul li a:hover {
-    color: #f48fb1; /* Color rosa */
-    font-size: 26.4px;
+.userLogin a.nav-link {
+    color: #f0f0f0; 
+    text-decoration: none; 
+    font-weight: bold;
+    font-size: 26px; 
+}
+
+.navbar-toggler {
+    background-color: #f48fb1;
+}
+
+.navbar-toggler:hover {
+    transform: scale(1.1);
 }
 
 /* Estilo botón cerrar sesión */
 #iconCerrar {
     width: 27.5px;
     height: auto;
-    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));  /* Para dar sombra a la imagen */
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3)); /* Sombra */
 }
-
 
 /* Sección de previsualizador */
 #previsualizador {
@@ -131,6 +144,7 @@ nav ul li a:hover {
     width: 50%;  
     padding-bottom: 4em;
     color: white;
+    background-color: #2a2a2a;
 }  
 
 #registroDiv:hover {

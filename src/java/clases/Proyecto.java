@@ -17,47 +17,30 @@ import java.util.ArrayList;
  *
  * @author Yohanna Gelo
  */
-public class Codigo extends Proyecto {
-
-    
+public abstract class Proyecto {
     
     // Atributos
-//    private String nombreCodigo;
-//    private String url;
-//    private InputStream img;
-    private ArrayList<Feedback> feedbackPorCodigo;
-//    
-//    
-    // Construtor
-    public Codigo(String nombre, String url, InputStream img) {
-            super(nombre, url, img);
-            feedbackPorCodigo = new ArrayList<Feedback>();
-        }
-
-//    public Codigo(String nombreCodigo, String url, InputStream img) {
-//        this.nombreCodigo = nombreCodigo;
-//        this.url = url;
-//        this.img = img;
-//        feedbackPorCodigo = new ArrayList<Feedback>();
-//    }
-//
+    protected String nombre;
+    protected String url;
+    protected InputStream img;
+    //protected ArrayList<Feedback> feedbacks;
+    
+    // Constructor
+    public Proyecto(String nombre, String url, InputStream img) {
+        this.nombre = nombre;
+        this.url = url;
+        this.img = img;
+    }
     
     // ToString
     @Override
     public String toString() {
-        return super.toString() + "Codigo{" + "feedbackPorCodigo=" + feedbackPorCodigo + '}';
+        return "Proyecto{" + "nombre=" + nombre + ", url=" + url + ", img=" + img + '}';
     }
     
     
-    // GETTERs y/o SETTERs
-    public ArrayList<Feedback> getFeedbackPorCodigo() {
-        return feedbackPorCodigo;
-    }
-
-    public void setFeedbackPorCodigo(ArrayList<Feedback> feedbackPorCodigo) {
-        this.feedbackPorCodigo = feedbackPorCodigo;
-    }
-
+    
+    // Getters y/o Setters
     public String getNombre() {
         return nombre;
     }
@@ -81,10 +64,9 @@ public class Codigo extends Proyecto {
     public void setImg(InputStream img) {
         this.img = img;
     }
+
     
-    
-    
-//    // MÉTODOS
+    // MÉTODOS
 //    // Variables para conectar con la bbdd
 //    private static final String DB_URL = "jdbc:mysql://localhost:3306/portfolio";
 //    private static final String DB_USERNAME = "root";
@@ -111,8 +93,6 @@ public class Codigo extends Proyecto {
 //        return nombreProyecto;
 //
 //    }
-
-
     
     
 }

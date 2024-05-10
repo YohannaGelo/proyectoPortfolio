@@ -19,7 +19,7 @@ cajaProyectos.forEach(container => {
         link.style.width = "50%";
     });
     container.addEventListener('mouseleave', () => {
-        container.style.backgroundColor = '#2a2a2a';
+        container.style.backgroundColor = 'transparent';
         link.style.textShadow = '';
         link.style.webkitTextStroke = '';
         link.style.webkitTextFillColor = '';
@@ -63,6 +63,8 @@ function initializeLoginModal() {
 function closeModal() {
     $('#myModal').modal('hide'); // Cierra el modal usando Bootstrap
 }
+
+
 
 
 // Listener para mostrar y cerrar el login

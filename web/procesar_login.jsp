@@ -14,8 +14,16 @@
 <html>
     <head>
         <title>Procesar Login</title>
+        <!-- Link para uso de bootstrap, pongo mi css debajo para que tome los colores de mi hoja de estilos -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+        <link rel="stylesheet" type="text/css" href="cssGelo/cssGelo_Bootstrap.css">
     </head>
     <body>
+
+        <!-- Código para usos de alerts personalizados -->
+        <jsp:include page="codigoReutilizableJSP/alerts.jsp" />
+
         <%
             // Obtenemos los datos del formulario
             String username = request.getParameter("username");
@@ -27,6 +35,10 @@
             ResultSet rs = null;
 
             try {
+
+                // Obtener la URL de la página anterior
+                String referer = request.getHeader("Referer");
+
                 // Conexión a la base de datos
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/portfolio", "root", "");
@@ -65,9 +77,9 @@
                         // Guardar los datos actualizados
                         visita.guardarDatos();
 
-                        
-                        // Obtener la URL de la página anterior
-                        String referer = request.getHeader("Referer");
+                        // Las credenciales son válidas, muestra mensaje
+                        session.setAttribute("alertMessage", "Bienvenid@ a mi portfolio " + username + ", espero que disfrutes.");
+                        session.setAttribute("alertType", "success");
 
                         // Verificar si la URL de referencia está disponible
                         if (referer != null) {
@@ -75,27 +87,40 @@
                             response.sendRedirect(referer);
                         } else {
                             // Si hay error redirige al inicio
-                            response.sendRedirect("pages/index.jsp");
+                            response.sendRedirect("../../../PORTFOLIO/index.jsp");
                         }
-                        
 
-                        // Las credenciales son válidas, muestra mensaje
-                        out.println("<script>");
-                        out.println("window.location.href = 'index.jsp';");
-                        out.println("</script>");
+                        //out.println("<script>");
+                        //out.println("window.location.href = 'index.jsp';");
+                        //out.println("</script>");
                     } else {
                         // La contraseña es incorrecta no son válidas
-                        out.println("<script>");
-                        out.println("alert('Contraseña incorrecta.');");
-                        out.println("window.location.href = 'index.jsp';");
-                        out.println("</script>");
+                        session.setAttribute("alertMessage", "Contraseña incorrecta.");
+                        session.setAttribute("alertType", "error");
+
+                        // Verificar si la URL de referencia está disponible
+                        if (referer != null) {
+                            // Redirigir al usuario a la página anterior
+                            response.sendRedirect(referer);
+                        } else {
+                            // Si hay error redirige al inicio
+                            response.sendRedirect("../../../PORTFOLIO/index.jsp");
+                        }
+
                     }
                 } else {
                     // Las credenciales no son válidas
-                    out.println("<script>");
-                    out.println("alert('El usuario no existe.');");
-                    out.println("window.location.href = 'index.jsp';");
-                    out.println("</script>");
+                    session.setAttribute("alertMessage", "El usuario no existe.");
+                    session.setAttribute("alertType", "error");
+
+                    // Verificar si la URL de referencia está disponible
+                    if (referer != null) {
+                        // Redirigir al usuario a la página anterior
+                        response.sendRedirect(referer);
+                    } else {
+                        // Si hay error redirige al inicio
+                        response.sendRedirect("../../../PORTFOLIO/index.jsp");
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -103,6 +128,7 @@
             } finally {
                 // Cerrar recursos
                 try {
+
                     if (rs != null) {
                         rs.close();
                     }
@@ -117,5 +143,13 @@
                 }
             }
         %>
+
+
+        <!-- Script para uso de bootstrap -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+        <!-- Enlace al archivo que contiene el código de javascript -->
+        <script src="jsGelo/js_index.js"></script>
+
     </body>
 </html>
