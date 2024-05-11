@@ -22,15 +22,7 @@
             <jsp:include page="codigoReutilizableJSP/alerts.jsp" />
 
             <!-- Título principal de la página -->
-            <h1 class="miH1">Yohanna Gelo</h1>
-
-            <%
-                // Obtener la sesión HTTP
-                session = request.getSession();
-
-                // Verificar si un usuario ha iniciado sesión
-                String username = (String) session.getAttribute("username");
-            %>
+            <h1>Yohanna Gelo</h1>
 
             <!-- Menú de navegación responsivo (llamada a otro jsp donde está el código guardado -->
             <jsp:include page="codigoReutilizableJSP/menu.jsp" />

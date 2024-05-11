@@ -12,6 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Yohanna Gelo</title>
+
     </head>
     <body>
         <%
@@ -54,11 +55,11 @@
                             <%
                                 if (username != null) {
                                     // Si el usuario ha iniciado sesión, muestra su nombre
-                                    out.print("¡Bienvenid@, " + username + "!");
+                                    out.print("<div class='sesion'><a href='' id='cuentaUsuario'><img src='../../../PORTFOLIO/img/usuario.png' alt='USuario conectado' id='iconUsuario' /><font id='usernameMenu'> " + username + "</font></a>");
                                     out.print("<a href='../../../PORTFOLIO/logout.jsp' id='close'><img src='../../../PORTFOLIO/img/cerrarSesion.png' alt='Cerrar sesión' id='iconCerrar' /></a>");
                                 } else {
                                     // Si el usuario no ha iniciado sesión, muestra el enlace de "Login"
-                                    out.print("<a class='nav-link' href='' id='log'>Login</a>");
+                                    out.print("<a class='nav-link' href='' id='log'>Login</a></div>");
                                 }
                             %>
                         </li>

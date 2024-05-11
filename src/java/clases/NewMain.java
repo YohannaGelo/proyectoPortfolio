@@ -23,8 +23,7 @@ public class NewMain {
         
         HashMap<Proyecto, Integer> proyectos = new HashMap<Proyecto, Integer>();
         
-        proyectos = ProyectoWeb.cargarProyectosWeb(proyectos);
-        proyectos = Codigo.cargarCodigos(proyectos);
+        proyectos = Proyecto.proyectosY_comentarios(proyectos);
         
         for (Map.Entry<Proyecto, Integer> entry : proyectos.entrySet()) {
             Object key = entry.getKey();
@@ -36,8 +35,8 @@ public class NewMain {
         }
         
         
-       Proyecto pSelcc = Proyecto.proyectoAleatorio(proyectos);
-        System.out.println("GANADOR: \n" + pSelcc.toString());
+       Proyecto proyectoRandom = Proyecto.proyectoAleatorio(proyectos);
+        System.out.println("GANADOR: \n" + proyectoRandom.getUrl());
         
     }
     

@@ -39,17 +39,8 @@
             <!-- Código para usos de alerts personalizados -->
             <jsp:include page="../codigoReutilizableJSP/alerts.jsp" />
 
-
             <!-- Título principal de la página -->
             <h1>Yohanna Gelo</h1>
-
-            <%
-                // Obtener la sesión HTTP
-                session = request.getSession();
-
-                // Verificar si un usuario ha iniciado sesión
-                String username = (String) session.getAttribute("username");
-            %>
 
             <!-- Menú de navegación responsivo (llamada a otro jsp donde está el código guardado -->
             <jsp:include page="../codigoReutilizableJSP/menu.jsp" />
@@ -57,33 +48,15 @@
             <!-- Ventana emergente para el Login -->
             <jsp:include page="../codigoReutilizableJSP/login.jsp" />
 
-            <!-- Ventana emergente para el login -->
-            <div id="login-modal" class="modal">
-                <div class="modal-content">
-                    <span class="close-btn">&times;</span>
-                    <h2>Login</h2>
-                    <form id="login-form" action="../procesar_login.jsp" method="post">
-                        <label for="username">Nombre de usuario:</label>
-                        <input type="text" id="username" name="username">
-
-                        <label for="password">Contraseña:</label>
-                        <input type="password" id="password" name="password">
-
-                        <!-- Enlace a formulario de registro -->
-                        <a id="reg" href="../registro.jsp">¿Aún no tienes cuenta? Regístrate aquí.</a><br><br>
-
-                        <button type="submit">Iniciar sesión</button>
-                    </form>
-                </div>
-            </div>
-
-
             <!-- CONTENIDO DE LA PÁGINA -->
             <center>
                 <section id="proyectos">
                     <h2>Códigos</h2>
                     <div class="proyecto" id="paginas-web">
                         <%
+                            // Usuario conectado
+                            String username = (String) session.getAttribute("username");
+
                             Class.forName("com.mysql.cj.jdbc.Driver");  // Nuevo controlador
                             Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/portfolio", "root", "");
                             Statement s = conexion.createStatement();
