@@ -6,12 +6,9 @@
 package clases;
 
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -67,32 +64,36 @@ public abstract class Proyecto {
 
     
     // MÉTODOS
-//    // Variables para conectar con la bbdd
-//    private static final String DB_URL = "jdbc:mysql://localhost:3306/portfolio";
-//    private static final String DB_USERNAME = "root";
-//    private static final String DB_PASSWORD = "";
-//    
-//    // Obtener nombre a través de la url
-//    public static String crearProyecto (String url) throws SQLException  {
-//
-//         String nombreProyecto = null;
-//
-//        // Consulta SQL para obtener el nombre del proyecto basado en la URL
-//        String sql = "SELECT * FROM proyectosWeb WHERE url = ?";
-//
-//        try (Connection conexion = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-//             PreparedStatement statement = conexion.prepareStatement(sql)) {
-//            statement.setString(1, url);
-//            ResultSet rs = statement.executeQuery();
-//
-//            if (rs.next()) {
-//                nombreProyecto = rs.getString("nombreProyecto");
-//            }
-//        }
-//
-//        return nombreProyecto;
-//
-//    }
+    // Crea un HashMap de proyectos y número de comentarios
+    public static HashMap<Proyecto, Integer> proyectosY_comentarios (HashMap<Proyecto, Integer> proyectos) throws SQLException {
+
+        HashMap<Proyecto, Integer> proyectosComentarios = proyectos;
+        
+        // Agrega los Proyectos de diferentes tipos junto a sus comentarios
+        proyectosComentarios = ProyectoWeb.cargarProyectosWeb(proyectos);
+        proyectosComentarios = Codigo.cargarCodigos(proyectos);
+        
+        return proyectosComentarios;
+        
+    }
+    
+    
+    // Selecciona un proyecto de forma aleatoria
+    public static Proyecto proyectoAleatorio (HashMap<Proyecto, Integer> proyectosComentarios) {
+        
+        // Obtener la lista de proyectos del HashMap
+        ArrayList<Proyecto> proyectos = new ArrayList<Proyecto>(proyectosComentarios.keySet());
+        
+        // Generar un índice aleatorio dentro del rango de la lista de proyectos
+        int indiceAleatorio = (int) (Math.random() * proyectos.size());
+
+        // Obtener el proyecto correspondiente al índice aleatorio
+        Proyecto proyectoSeleccionado = proyectos.get(indiceAleatorio);
+
+        return proyectoSeleccionado;
+
+    }
+    
     
     
 }

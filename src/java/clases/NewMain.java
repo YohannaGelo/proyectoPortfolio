@@ -5,17 +5,40 @@
  */
 package clases;
 
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
- * @author yohan
+ * @author Yohanna Gelo
  */
 public class NewMain {
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        // TODO code application logic here
+    public static void main(String[] args) throws SQLException {
+        
+        
+        HashMap<Proyecto, Integer> proyectos = new HashMap<Proyecto, Integer>();
+        
+        proyectos = ProyectoWeb.cargarProyectosWeb(proyectos);
+        proyectos = Codigo.cargarCodigos(proyectos);
+        
+        for (Map.Entry<Proyecto, Integer> entry : proyectos.entrySet()) {
+            Object key = entry.getKey();
+            Object val = entry.getValue();
+            
+            System.out.println("Proyecto: \n" + key);
+            System.out.println("Num comentarios: " + val);
+            
+        }
+        
+        
+       Proyecto pSelcc = Proyecto.proyectoAleatorio(proyectos);
+        System.out.println("GANADOR: \n" + pSelcc.toString());
+        
     }
     
 }
