@@ -52,26 +52,42 @@
 
 
                         <br><br>
+                        <%
+                            // Obtener la sesión HTTP
+                            session = request.getSession();
+
+                            // Verificar si un usuario ha iniciado sesión
+                            String username = (String) session.getAttribute("username");
+
+                            if (username != null) {
+                        %>
                         <!-- Escribir un mail directo -->
                         <p>¿Quieres escribirme desde aquí?</p>
-                        <form id="interactuar" action="mailto:yohannagelo@gmail.com" method="post">
+                        <form id="interactuar" onsubmit="enviarCorreo(event)">
+                            <!-- Campo oculto para pasar el nombre de usuario -->
+                            <input type="hidden" id="nombre" name="nombre" value="<%= username%>">
                             <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label">Tu email:</label>
-                                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                                <label for="correo" class="form-label">Tu email:</label>
+                                <input type="email" class="form-control" id="correo" name="correo" placeholder="name@example.com" required>
                             </div>
                             <div class="mb-3">
-                                <label for="exampleFormControlTextarea1" class="form-label">Escribe tu mensaje:</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+                                <label for="mensaje" class="form-label">Escribe tu mensaje:</label>
+                                <textarea class="form-control" id="mensaje" name="mensaje" rows="5" required></textarea>
                             </div>
 
                             <input type="submit" value="Enviar">
                         </form>
+                        <br><p id="estadoEnvio"></p>
 
                         <br><br>
                         <!-- Enlace de WhatsApp -->
                         <p>¿Prefieres enviar un mensaje por WhatsApp?</p>
                         <p><a href="https://wa.me/655494824" target="_blank">
                                 <img class="redesSociales" src="../img/whatsapp.png" alt="Acceso a Whatsapp"/></a></p>
+
+                        <%
+                            }
+                        %>
 
                         <br><br>
                         <!-- Enlaces a redes sociales -->

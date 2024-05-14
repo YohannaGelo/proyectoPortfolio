@@ -17,7 +17,7 @@ import java.util.ArrayList;
  *
  * @author Yohanna Gelo
  */
-public class DisGrafico extends Portfolio {
+public class DisGrafico {
     
     // Atributos
     private String nombreDisGrafico;

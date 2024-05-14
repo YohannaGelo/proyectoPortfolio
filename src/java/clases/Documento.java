@@ -17,7 +17,7 @@ import java.util.ArrayList;
  *
  * @author Yohanna Gelo
  */
-public class Documento extends Portfolio {
+public class Documento {
     
     // Atributos
     private String nombreDoumento;

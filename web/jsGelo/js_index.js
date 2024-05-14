@@ -92,3 +92,45 @@ function goToTop() {
         behavior: 'smooth'
     });
 }
+
+// Procesar el envio de correo a través de php, de forma asíncrona
+function enviarCorreo(e) {
+    e.preventDefault(); // Evita que el formulario se envíe de la manera tradicional
+
+    // Mostrar mensaje de "enviando..."
+    document.getElementById('estadoEnvio').innerHTML = "<div class='spinner-border' role='status'><span class='visually-hidden'>Loading...</span></div>Enviando...";
+
+    // Aquí recogemos los valores del formulario
+    var nombre = document.getElementById('nombre').value;
+    var correo = document.getElementById('correo').value;
+    var mensaje = document.getElementById('mensaje').value;
+
+    // Configuramos la solicitud AJAX
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4) {
+            //if (this.status === 200) {
+            // Mostrar el mensaje de respuesta del servidor
+            //document.getElementById('estadoEnvio').innerHTML = this.responseText;
+            document.getElementById('estadoEnvio').innerHTML = 'Mensaje enviado.';
+            vaciarCampos();
+            //} else {
+            //document.getElementById('estadoEnvio').innerHTML = 'Error al enviar el mensaje.';
+            //}
+        }
+    };
+    
+    // Aquí abrimos la solicitud con el método POST y la URL a la que queremos enviar los datos
+    xhttp.open("POST", "http://localhost/enviar_correo.php", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("nombre=" + encodeURIComponent(nombre) + "&correo=" + encodeURIComponent(correo) + "&mensaje=" + encodeURIComponent(mensaje));
+    
+    
+
+}
+
+// Listener para vaciar los campos del correo 
+function vaciarCampos() {
+    document.getElementById('correo').value = '';
+    document.getElementById('mensaje').value = '';
+}
