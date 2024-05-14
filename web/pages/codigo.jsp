@@ -49,6 +49,35 @@
             <jsp:include page="../codigoReutilizableJSP/login.jsp" />
 
             <!-- CONTENIDO DE LA PÁGINA -->
+
+            <!-- Botón con instrucciones para ver código en Replit -->
+            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Ejecuta el código</button>
+
+            <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+                <div class="offcanvas-header">
+                    <h6 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Cómo abrir y ejecutar el código con Replit</h6>
+                    <button id="cierreCanvas" type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <h3></h3>
+                    <ol>
+                        <li><b>Acceder al enlace compartido:</b> <br>Pincha sobre el proyecto que quieras ejecutar y se te abrirá una nueva pestaña en el navegador</li><br>
+                        <li><b>Iniciar sesión (si es necesario):</b> <br>Si no has iniciado sesión en Replit, es posible que te solicite que lo hagas antes de continuar. 
+                            Puedes iniciar sesión utilizando tu cuenta de Google u otras opciones disponibles.</li><br>
+                        <li><b>Abrir el código en Replit:</b> <br>Una vez iniciada la sesión, el enlace te llevará al código en Replit. 
+                            Aquí puedes ver el código y su descripción.</li><br>
+                        <li><b>Fork & Run:</b> <br>Para ejecutar el código, busca el botón "Fork & Run" en la parte superior derecha de la pantalla. 
+                            Haz clic en este botón para crear una copia del código en tu propia cuenta de Replit y ejecutarlo.</li><br>
+                        <li><b>Esperar a que se cargue el entorno:</b> <br>Dependiendo del tamaño del código y la configuración del entorno, puede tomar 
+                            unos momentos para que Replit configure todo y ejecute el código.</li><br>
+                        <li><b>Interactuar con el código:</b> <br>Una vez que el código se haya ejecutado correctamente, podrás interactuar con él según lo diseñado 
+                            por el autor. Esto puede incluir entrada de usuario, visualización de resultados, etc.</li><br>
+                        <li><b>Cerrar la ventana de Replit:</b> <br>Una vez que hayas terminado de interactuar con el código, puedes cerrar la ventana de 
+                            Replit si lo deseas. Tu copia del código seguirá estando disponible en tu cuenta de Replit para futuras referencias o modificaciones.</li>
+                    </ol>
+                </div>
+            </div>
+
             <center>
                 <section id="proyectos">
                     <h2>Códigos</h2>
@@ -111,11 +140,14 @@
                                 // Enlaces en el título del proyecto. Usa target blank para abrirse en una nueva pestaña
                                 out.println("<a href='" + cod.getUrl() + "' class='link' target='_blank'>Pincha aquí o en la imágen para ver completo el proyecto " + cod.getNombre() + "</a>");
                                 out.println("<br><br>");
+
                                 // Crea un div contenedor para el iframe y la imagen
                                 out.println("<div class='iframe-img-container'>");
+                                out.println("<div class='iframe-container'>");
+                                out.println("<iframe style='border: 1px solid white; border-radius: 10px; height: 400px; width: 90%;' src='" + cod.getUrl() + "?embed=true' scrolling='no' frameborder='no' allowtransparency='true' allowfullscreen='true' sandbox='allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals'></iframe>");
+                                out.println("</div>");
 
-                                out.println("<iframe style='border: 1px solid white; border-radius: 10px;' height='450px' width='70%' src='" + cod.getUrl() + "?embed=true' scrolling='no' frameborder='no' allowtransparency='true' allowfullscreen='true' sandbox='allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals'></iframe>");
-
+                                out.println("<div class='img-container'>");
                                 // Obtener la imagen de la base de datos como InputStream
                                 InputStream imagenStream = cod.getImg();
                                 // Leer el contenido de la imagen y codificarla en base64
@@ -132,8 +164,9 @@
                                 // Renderizar la imagen en HTML como un elemento <img>
                                 //out.println("<br>");
                                 out.println("<a href='" + cod.getUrl() + "' target='_blank'>");
-                                out.println("<img style='border: 1px solid white; border-radius: 10px; width: 'auto'; height='450px';' src=\"data:image/jpeg;base64," + base64Image + "\" height='auto' width='27%' alt=\"Imagen del socio\" class=\"imgCodigo\">");
+                                out.println("<img style='border: 1px solid white; border-radius: 10px; width: 90%; max-height: 400px;  min-height: 250px;' src=\"data:image/jpeg;base64," + base64Image + "\" height='auto' width='27%' alt=\"Imagen del socio\" class=\"imgCodigo\">");
                                 out.println("</a>");
+                                out.println("</div>");
 
                                 // Cerrar el InputStream y el ByteArrayOutputStream
                                 imagenStream.close();
@@ -263,6 +296,10 @@
             </center>
 
         </div>
+
+        <!-- Botón para ir arriba -->
+        <button class="btn-go-top" onclick="goToTop()"><img src="../img/arriba.png" alt="Volver arriba de la página" id="btnUp" /></button>
+        
 
         <!-- Script para uso de bootstrap -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

@@ -36,10 +36,10 @@
     </head>
     <body>
         <div class="container-fluid">
-            
+
             <!-- Código para usos de alerts personalizados -->
             <jsp:include page="../codigoReutilizableJSP/alerts.jsp" />
-            
+
             <!-- Título principal de la página -->
             <h1>Yohanna Gelo</h1>
 
@@ -49,7 +49,7 @@
             <!-- Ventana emergente para el Login -->
             <jsp:include page="../codigoReutilizableJSP/login.jsp" />
 
-            
+
             <!-- CONTENIDO DE LA PÁGINA -->
             <center>
                 <section id="proyectos">
@@ -58,7 +58,7 @@
                         <%
                             // Usuario conectado
                             String username = (String) session.getAttribute("username");
-                            
+
                             Class.forName("com.mysql.cj.jdbc.Driver");  // Nuevo controlador
                             Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/portfolio", "root", "");
                             Statement s = conexion.createStatement();
@@ -258,6 +258,10 @@
             </center>
 
         </div>
+
+        <!-- Botón para ir arriba -->
+        <button class="btn-go-top" onclick="goToTop()"><img src="../img/arriba.png" alt="Volver arriba de la página" id="btnUp" /></button>
+
         <!-- Script para uso de bootstrap -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 

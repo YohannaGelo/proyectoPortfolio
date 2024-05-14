@@ -49,7 +49,7 @@
                             <a class="nav-link" href="../../../PORTFOLIO/pages/codigo.jsp">Códigos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../../../PORTFOLIO/pages/">Contacto</a>
+                            <a class="nav-link" href="../../../PORTFOLIO/pages/contacto.jsp">Contacto</a>
                         </li>
                         <li class="nav-item userLogin">
                             <%

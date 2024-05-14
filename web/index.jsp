@@ -49,10 +49,8 @@
             <!-- CONTENIDO DE LA PÁGINA -->
             <!-- Sección de previsualizador -->
             <section id="previsualizador">
-                <h2>Previsualizador de Proyectos</h2>
+                <h2>Un vistazo a mis creaciones</h2>
                 <div id="project-preview" >
-
-
 
                     <!-- proyectos de forma aleatoria -->
                     <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
@@ -80,43 +78,14 @@
                         </button>
                     </div>
 
-
-
-
                 </div>
             </section>
 
-            <!-- Sección de proyectos -->
-            <section id="proyectos">
-                <h2>Mis Proyectos</h2>
-                <div class="proyecto" id="diseno-grafico">
-                    <h3>Diseños Gráficos</h3>
-                    <div class="project-container">
-                        <!-- diseños gráficos -->
-                    </div>
-                </div>
-
-                <div class="proyecto" id="documentos-trabajos">
-                    <h3>Documentos/Trabajos</h3>
-                    <div class="project-container">
-                        <!-- documentos y trabajos -->
-                    </div>
-                </div>
-                <div class="proyecto" id="codigo">
-                    <h3>Código</h3>
-                    <div class="project-container">
-                        <!-- código -->
-                        <iframe height="400px" width="100%" src="https://replit.com/@yohannagelo/Sorteo?embed=true" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals">
-                        </iframe>
-
-                        <br>
-                        <!--<div data-pym-src="https://www.jdoodle.com/embed/v1/8de489f0facd05ba"></div>-->
-                        <script src="https://www.jdoodle.com/assets/jdoodle-pym.min.js" type="text/javascript"></script>
-
-                    </div>
-                </div>
-            </section>
         </div>
+
+        <!-- Botón para ir arriba -->
+        <button class="btn-go-top" onclick="goToTop()"><img src="img/arriba.png" alt="Volver arriba de la página" id="btnUp" /></button>
+
         <!-- Script para uso de bootstrap -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
