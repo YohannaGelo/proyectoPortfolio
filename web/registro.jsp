@@ -58,7 +58,7 @@
                             <label for="email" class="form-label">Correo electrónico:</label>
                             <input type="email" id="email" name="email" class="form-control" required>
                         </div>
-                        <br><button id="miButton" type="submit" class="btn btn-primary w-100">Registrar</button>
+                        <br><button id="miButton" >Registrar</button>
                     </form>
                 </div>
             </div>

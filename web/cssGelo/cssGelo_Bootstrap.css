@@ -54,6 +54,12 @@ h2, h6 {
     text-align: center;
 }
 
+.alert {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
 /* Ventana emergente (modal) */
 .modal {
     display: none;
@@ -123,6 +129,7 @@ h2, h6 {
     border-radius: 5px;
     cursor: pointer;
     font-weight: bolder;
+    width: 7em;
 }
 
 #login-form button:hover, #miButton:hover {

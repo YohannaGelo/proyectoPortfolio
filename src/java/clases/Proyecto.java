@@ -20,6 +20,7 @@ public abstract class Proyecto {
     protected String nombre;
     protected String url;
     protected InputStream img;
+    protected boolean like = false;
     //protected ArrayList<Feedback> feedbacks;
     
     // Constructor

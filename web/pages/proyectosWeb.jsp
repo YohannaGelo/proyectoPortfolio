@@ -145,6 +145,13 @@
 
 
                         %>
+                        
+                        <!-- Dejar voto en el proyecto -->
+                        
+                        
+                        
+                        
+                        <!-- Formulario para enviar comentarios -->
                         <div class="divComentarios">
                             <form action="../procesar_comentarios.jsp" method="POST" id="feedback">
                                 <input type="hidden" name="proyecto_id" value="<%= proy.getUrl()%>">
