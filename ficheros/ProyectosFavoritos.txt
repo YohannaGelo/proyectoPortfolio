@@ -1,5 +1,3 @@
 
-https://replit.com/@yohannagelo/ChessCodeRoyale,alba,1
-https://yohannagelo.github.io/EjRegistroEstudiantes/,alba,1
-https://yohannagelo.github.io/EjGestorTareas/,alba,1
-https://yohannagelo.github.io/EjGestorTareas/,juan,1
+https://yohannagelo.github.io/ProyClashRoyale/,pepe,1
+https://yohannagelo.github.io/EjFiltrandoJugadores/,pepe,1

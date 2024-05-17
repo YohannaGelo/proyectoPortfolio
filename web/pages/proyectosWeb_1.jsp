@@ -5,7 +5,6 @@
 --%>
 
 
-<%@page import="clases.Favorito"%>
 <%@page import="java.util.Collections"%>
 <%@page import="java.util.ArrayList"%>
 
@@ -147,38 +146,39 @@
                                     // Obtiene la lista de comentarios del proyecto
                                     ArrayList<Feedback> comentarios = proy.getFeedbackPorProyecto();
 
-                                    // Crea un nuevo objeto favorito
-                                    Favorito nuevoFavorito = new Favorito(proy.getUrl(), username);
-
-                                    // LLama al método para registar el voto
-                                    boolean votoRegistrado = nuevoFavorito.comprobarLike();
-                                    
-                                    // según se haya registrado o no el voto, se da un estilo u otro al botón
-                                    if (votoRegistrado) {
 
                         %>
 
-                            <br>
-                            <div class='fondoBtnFavorito' id="fondoBtnFavorito<%= counter%>" style="opacity: 1">
-                                <button type="button" class='btnDarLike' onclick="votarFavorito('<%= proy.getUrl()%>', '<%= counter%>')">
-                                    <img src='../img/likeOn.png' alt='Mi Favorito' class="imgFavorito" id="imgFavorito<%= counter%>" />
+                        <!-- Dejar voto en el proyecto -->
+                        <br>
+                        
+                        <div class='fondoBtnFavorito' id="fondoBtnFavorito<%= counter%>">
+                            <button type="button" class='btnDarLike' onclick="votarFavorito('<%= proy.getUrl()%>', '<%= counter%>')">
+                                <img src='../img/likeOff.png' alt='Mi Favorito' class="imgFavorito" id="imgFavorito<%= counter%>" />
+                            </button>
+                        </div>
+                        
+<!-- <%-- 
+                        <div class='fondoBtnFavorito' id="fondoBtnFavorito+<%= counter%>">
+                            <form action="../procesarLike.jsp" method="POST">
+                                <input type="hidden" name="proyecto_url" value="<%= proy.getUrl()%>">
+                                <input type="hidden" name="contador" value="<%= counter%>">
+                                <button type="submit" class='btnDarLike' id='btnDarLike+<%= counter%>' >
+                                    <img src='../img/likeOff.png' alt='Mi Favorito' class="imgFavorito" id="imgFavorito+<%= counter%>" />
                                 </button>
-                            </div>
-                            <br>
-                        
-                        
-                        <% } else { %>
-                        
-                            <br>
-                            <div class='fondoBtnFavorito' id="fondoBtnFavorito<%= counter%>">
-                                <button type="button" class='btnDarLike' onclick="votarFavorito('<%= proy.getUrl()%>', '<%= counter%>')">
-                                    <img src='../img/likeOff.png' alt='Mi Favorito' class="imgFavorito" id="imgFavorito<%= counter%>" />
-                                </button>
-                            </div>
-                            <br>
+                            </form>
+                        </div>  
 
-                        <% } %>
-                        
+                        <div class='fondoBtnFavorito' id="fondoBtnFavorito<%= counter%>">
+                            <input type="hidden" id="proyecto_url_<%= counter%>" value="<%= proy.getUrl()%>">
+                            <input type="hidden" id="contador_<%= counter%>" value="<%= counter%>">
+                            <button type="button" class='btnDarLike' id='btnDarLike<%= counter%>' onclick="votarFavorito('<%= proy.getUrl()%>', <%= counter%>)">
+                                <img src='../img/likeOff.png' alt='Mi Favorito' class="imgFavorito" id="imgFavorito<%= counter%>" />
+                            </button>
+                        </div> --%>-->
+
+                        <br>
+
                         <!-- Formulario para enviar comentarios -->
                         <div class="divComentarios">
                             <form action="../procesar_comentarios.jsp" method="POST" id="feedback">

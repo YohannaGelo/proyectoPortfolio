@@ -85,9 +85,10 @@ public class Favorito {
     }
 
     // Métodos
-    public void agregarFavorito() {
-
-//        this.comprobarLike(url, usuario);
+    public boolean agregarFavorito() {
+        
+        boolean votoRegistrado = false;
+        
         // Si este usuario no le ha dado like, se registra
         if (!this.comprobarLike()) {
 
@@ -100,6 +101,7 @@ public class Favorito {
                 this.setNumVotos(1);
                 bw.write(this.toString());
 
+                votoRegistrado = true;
                 System.out.println("Voto añadido correctamente");
 
             } catch (IOException ioe) {
@@ -118,8 +120,11 @@ public class Favorito {
 
             }
         } else {
+            votoRegistrado = false;
             System.out.println("Este usuario ya ha votado a este proyecto");
         }
+        
+        return votoRegistrado;
     }
 
     // Comprobar si un usuario ya ha dado like a ese proyecto

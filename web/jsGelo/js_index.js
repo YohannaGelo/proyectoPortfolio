@@ -93,6 +93,68 @@ function goToTop() {
     });
 }
 
+
+async function votarFavorito(url, counter) {
+    try {
+        const response = await fetch(`../procesarLike.jsp?url=${url}`);
+        const votoRegistrado = await response.text();
+        console.log('Longitud de votoRegistrado:', votoRegistrado.length);
+        console.log('Respuesta desde Java:', votoRegistrado + counter);
+
+        if (votoRegistrado.trim() === 'true') {
+            darLike(counter);
+            //console.log(votoRegistrado + counter);
+        } else {
+            
+            quitarLike(counter);
+            //console.log(votoRegistrado + counter);
+
+        }
+
+        // Aquí puedes realizar las acciones necesarias en tu página JSP basadas en la respuesta recibida.
+    } catch (error) {
+        console.error('Error al llamar al método Java:', error);
+    }
+}
+
+
+//Función para cambiar el aspecto del botón Favorito
+function darLike(counter) {
+
+    console.log("Estoy en LIKE" + counter);
+    // Selecciona el enlace dentro del contenedor
+    const divId = 'fondoBtnFavorito' + counter;
+    const div = document.getElementById(divId);
+    console.log(div);
+    // Cambia la opacidad del div y la imagen del botón
+    if (div) {
+        div.style.opacity = '100%';
+        const imgID = 'imgFavorito' + counter;
+        console.log(imgID);
+        const img = document.getElementById(imgID);
+        if (img) {
+            img.src = '../img/likeOn.png';
+        }
+    }
+
+}
+
+function quitarLike(counter) {
+    console.log("Estoy en dislike" + counter);
+    // Selecciona el enlace dentro del contenedor
+    const divId = 'fondoBtnFavorito' + counter;
+    const div = document.getElementById(divId);
+    // Cambia la opacidad del div y la imagen del botón
+    if (div) {
+        div.style.opacity = '40%';
+        const imgID = 'imgFavorito' + counter;
+        const img = document.getElementById(imgID);
+        if (img) {
+            img.src = '../img/likeOff.png';
+        }
+    }
+}
+
 // Procesar el envio de correo a través de php, de forma asíncrona
 function enviarCorreo(e) {
     e.preventDefault(); // Evita que el formulario se envíe de la manera tradicional
@@ -119,13 +181,13 @@ function enviarCorreo(e) {
             //}
         }
     };
-    
+
     // Aquí abrimos la solicitud con el método POST y la URL a la que queremos enviar los datos
     xhttp.open("POST", "http://localhost/enviar_correo.php", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("nombre=" + encodeURIComponent(nombre) + "&correo=" + encodeURIComponent(correo) + "&mensaje=" + encodeURIComponent(mensaje));
-    
-    
+
+
 
 }
 

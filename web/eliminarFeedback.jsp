@@ -4,7 +4,6 @@
     Author     : Yohanna Gelo
 --%>
 
-<%@page import="clases.Portfolio"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>

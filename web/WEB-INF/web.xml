@@ -1,0 +1,18 @@
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+
+    <!-- Define tu servlet -->
+    <servlet>
+        <servlet-name>AgregarFavoritoServlet</servlet-name>
+        <servlet-class>servlets.AgregarFavoritoServlet</servlet-class>
+    </servlet>
+
+    <!-- Mapea tu servlet a una URL -->
+    <servlet-mapping>
+        <servlet-name>AgregarFavoritoServlet</servlet-name>
+        <url-pattern>/AgregarFavoritoServlet</url-pattern>
+    </servlet-mapping>
+
+</web-app>

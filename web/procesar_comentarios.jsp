@@ -4,7 +4,7 @@
     Author     : Yohanna Gelo
 --%>
 
-<%@page import="clases.Portfolio"%>
+
 <%@page import="clases.Feedback"%>
 <%@page import="java.time.LocalDateTime"%>
 <%@ page import="java.sql.*" %>
@@ -51,8 +51,6 @@
                 int filasAfectadas = stmt.executeUpdate();
 
                 if (filasAfectadas > 0) {
-                    // Cargo mi objeto portfolio
-                    Portfolio miPortfolio = (Portfolio) application.getAttribute("portfolio");
 
                     // Obtener la URL de la página anterior
                     String referer = request.getHeader("Referer");
