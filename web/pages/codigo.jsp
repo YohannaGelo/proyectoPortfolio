@@ -4,6 +4,7 @@
     Author     : Yohanna Gelo
 --%>
 
+<%@page import="clases.Favorito"%>
 <%@page import="clases.Codigo"%>
 <%@page import="java.util.Collections"%>
 <%@page import="java.util.ArrayList"%>
@@ -132,6 +133,9 @@
                                 }
                             }
 
+                            // Cuenta los diferentes proyectos
+                            int counter = 0;
+
                             // Recorre el array proyectos y va mostrando la información
                             for (Codigo cod : codigos) {
                                 // Crea un div para cada proyecto
@@ -182,7 +186,40 @@
                                     ArrayList<Feedback> comentarios = cod.getFeedbackPorCodigo();
 
 
+                                    /* SISTEMA DE LIKE / FAVORITOS */
+                                    // Crea un nuevo objeto favorito
+                                    Favorito nuevoFavorito = new Favorito(cod.getUrl(), username);
+                                    // LLama al método para registar el voto
+                                    boolean votoRegistrado = nuevoFavorito.comprobarLike();
+
+                                    // según se haya registrado o no el voto, se da un estilo u otro al botón
+                                    if (votoRegistrado) {
+
                         %>
+
+                        <br>
+                        <div class='fondoBtnFavorito' id="fondoBtnFavorito<%= counter%>" style="opacity: 1">
+                            <button type="button" class='btnDarLike' onclick="votarFavorito('<%= cod.getUrl()%>', '<%= counter%>')">
+                                <img src='../img/likeOn.png' alt='Mi Favorito' class="imgFavorito" id="imgFavorito<%= counter%>" />
+                            </button>
+                        </div>
+                        <br>
+
+
+                        <% } else {%>
+
+                        <br>
+                        <div class='fondoBtnFavorito' id="fondoBtnFavorito<%= counter%>">
+                            <button type="button" class='btnDarLike' onclick="votarFavorito('<%= cod.getUrl()%>', '<%= counter%>')">
+                                <img src='../img/likeOff.png' alt='Mi Favorito' class="imgFavorito" id="imgFavorito<%= counter%>" />
+                            </button>
+                        </div>
+                        <br>
+
+                        <% }%>
+
+
+                        <!-- Formulario para enviar comentarios -->
                         <div class="divComentarios">
                             <form action="../procesar_comentarios.jsp" method="POST" id="feedback">
                                 <input type="hidden" name="proyecto_id" value="<%= cod.getUrl()%>">
@@ -262,6 +299,8 @@
 
                             out.println("</div>");  // Cierre div project-container
 
+                            counter++;
+
                         }  // Fin for (proyectos)
 
                         //conexion.close();
@@ -299,7 +338,7 @@
 
         <!-- Botón para ir arriba -->
         <button class="btn-go-top" onclick="goToTop()"><img src="../img/arriba.png" alt="Volver arriba de la página" id="btnUp" /></button>
-        
+
 
         <!-- Script para uso de bootstrap -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

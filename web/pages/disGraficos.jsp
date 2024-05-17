@@ -5,6 +5,8 @@
 --%>
 
 
+<%@page import="clases.DisGrafico"%>
+<%@page import="clases.Favorito"%>
 <%@page import="java.util.Collections"%>
 <%@page import="java.util.ArrayList"%>
 
@@ -53,7 +55,7 @@
             <!-- CONTENIDO DE LA PÁGINA -->
             <center>
                 <section id="proyectos">
-                    <h2>Proyectos web</h2>
+                    <h2>Diseños Gráficos</h2>
                     <div class="proyecto" id="paginas-web">
                         <%
                             // Usuario conectado
@@ -64,21 +66,21 @@
                             Statement s = conexion.createStatement();
 
                             // Array para almacenar los proyectos con sus comentarios
-                            ArrayList<ProyectoWeb> proyectos = new ArrayList<ProyectoWeb>();
+                            ArrayList<DisGrafico> proyectos = new ArrayList<DisGrafico>();
 
                             // Ejecutar la consulta para obtener los datos de proyectos y comentarios
                             ResultSet listado = s.executeQuery(
-                                    "SELECT p.url, p.nombreProyecto, p.img, c.id, c.username, c.comentario, c.fecha "
-                                    + "FROM proyectosWeb p "
-                                    + "LEFT JOIN comentarios c ON p.url = c.url"
+                                    "SELECT d.url, d.nombreDG, d.img, c.id, c.username, c.comentario, c.fecha "
+                                    + "FROM disgraficos d "
+                                    + "LEFT JOIN comentarios c ON d.url = c.url"
                             );
 
                             while (listado.next()) {
                                 String url = listado.getString("url");
 
                                 // Buscar el proyecto correspondiente en la lista de proyectos
-                                ProyectoWeb proyecto = null;
-                                for (ProyectoWeb proy : proyectos) {
+                                DisGrafico proyecto = null;
+                                for (DisGrafico proy : proyectos) {
                                     if (proy.getUrl().equals(url)) {
                                         proyecto = proy;
                                         break;
@@ -87,9 +89,9 @@
 
                                 // Si no se encontró el proyecto, crea uno nuevo
                                 if (proyecto == null) {
-                                    String nombreProyecto = listado.getString("nombreProyecto");
+                                    String nombreDisGrafico = listado.getString("nombreDG");
                                     InputStream imagenStream = listado.getBinaryStream("img");
-                                    proyecto = new ProyectoWeb(nombreProyecto, url, imagenStream);
+                                    proyecto = new DisGrafico(nombreDisGrafico, url, imagenStream);
                                     proyectos.add(proyecto);
                                 }
 
@@ -101,7 +103,7 @@
                                     LocalDateTime fecha = listado.getTimestamp("fecha").toLocalDateTime();
 
                                     Feedback feedback = new Feedback(id, usernameCons, url, comentario, fecha);
-                                    proyecto.getFeedbackPorProyecto().add(feedback);
+                                    proyecto.getFeedbackPorDisGrafico().add(feedback);
                                 }
                             }
 
@@ -109,12 +111,12 @@
                             int counter = 0;
 
                             // Recorre el array proyectos y va mostrando la información
-                            for (ProyectoWeb proy : proyectos) {
+                            for (DisGrafico proy : proyectos) {
                                 // Crea un div para cada proyecto
                                 out.println("<div class='project-container' style='width: 80%'>");
 
                                 // Enlaces en el título del proyecto. Usa target blank para abrirse en una nueva pestaña
-                                out.println("<a href='" + proy.getUrl() + "' class='link' target='_blank'>Pincha aquí o en la imágen para ver completo el proyecto " + proy.getNombre() + "</a>");
+                                out.println("<a href='" + proy.getUrl() + "' class='link' target='_blank'>Pincha aquí o en la imágen para ver completo el proyecto " + proy.getNombre()+ "</a>");
 
                                 // Obtener la imagen de la base de datos como InputStream
                                 InputStream imagenStream = proy.getImg();
@@ -144,41 +146,40 @@
                                 if (username != null) {
 
                                     // Obtiene la lista de comentarios del proyecto
-                                    ArrayList<Feedback> comentarios = proy.getFeedbackPorProyecto();
+                                    ArrayList<Feedback> comentarios = proy.getFeedbackPorDisGrafico();
 
+                                    /* SISTEMA DE LIKE / FAVORITOS */
+                                    // Crea un nuevo objeto favorito
+                                    Favorito nuevoFavorito = new Favorito(proy.getUrl(), username);
+                                    // LLama al método para registar el voto
+                                    boolean votoRegistrado = nuevoFavorito.comprobarLike();
+
+                                    // según se haya registrado o no el voto, se da un estilo u otro al botón
+                                    if (votoRegistrado) {
 
                         %>
 
-                        <!-- Dejar voto en el proyecto -->
-                        <br>
-                        
-                        <div class='fondoBtnFavorito' id="fondoBtnFavorito<%= counter%>">
-                            <button type="button" class='btnDarLike' onclick="votarFavorito('<%= proy.getUrl()%>', '<%= counter%>')">
-                                <img src='../img/likeOff.png' alt='Mi Favorito' class="imgFavorito" id="imgFavorito<%= counter%>" />
-                            </button>
-                        </div>
-                        
-<!-- <%-- 
-                        <div class='fondoBtnFavorito' id="fondoBtnFavorito+<%= counter%>">
-                            <form action="../procesarLike.jsp" method="POST">
-                                <input type="hidden" name="proyecto_url" value="<%= proy.getUrl()%>">
-                                <input type="hidden" name="contador" value="<%= counter%>">
-                                <button type="submit" class='btnDarLike' id='btnDarLike+<%= counter%>' >
-                                    <img src='../img/likeOff.png' alt='Mi Favorito' class="imgFavorito" id="imgFavorito+<%= counter%>" />
+                            <br>
+                            <div class='fondoBtnFavorito' id="fondoBtnFavorito<%= counter%>" style="opacity: 1">
+                                <button type="button" class='btnDarLike' onclick="votarFavorito('<%= proy.getUrl()%>', '<%= counter%>')">
+                                    <img src='../img/likeOn.png' alt='Mi Favorito' class="imgFavorito" id="imgFavorito<%= counter%>" />
                                 </button>
-                            </form>
-                        </div>  
+                            </div>
+                            <br>
+                        
+                        
+                        <% } else { %>
+                        
+                            <br>
+                            <div class='fondoBtnFavorito' id="fondoBtnFavorito<%= counter%>">
+                                <button type="button" class='btnDarLike' onclick="votarFavorito('<%= proy.getUrl()%>', '<%= counter%>')">
+                                    <img src='../img/likeOff.png' alt='Mi Favorito' class="imgFavorito" id="imgFavorito<%= counter%>" />
+                                </button>
+                            </div>
+                            <br>
 
-                        <div class='fondoBtnFavorito' id="fondoBtnFavorito<%= counter%>">
-                            <input type="hidden" id="proyecto_url_<%= counter%>" value="<%= proy.getUrl()%>">
-                            <input type="hidden" id="contador_<%= counter%>" value="<%= counter%>">
-                            <button type="button" class='btnDarLike' id='btnDarLike<%= counter%>' onclick="votarFavorito('<%= proy.getUrl()%>', <%= counter%>)">
-                                <img src='../img/likeOff.png' alt='Mi Favorito' class="imgFavorito" id="imgFavorito<%= counter%>" />
-                            </button>
-                        </div> --%>-->
-
-                        <br>
-
+                        <% } %>
+                        
                         <!-- Formulario para enviar comentarios -->
                         <div class="divComentarios">
                             <form action="../procesar_comentarios.jsp" method="POST" id="feedback">

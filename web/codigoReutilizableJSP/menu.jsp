@@ -37,7 +37,7 @@
                             <a class="nav-link" href="../../../PORTFOLIO/index.jsp">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../../../PORTFOLIO/pages/">Diseños Gráficos</a>
+                            <a class="nav-link" href="../../../PORTFOLIO/pages/disGraficos.jsp">Diseños Gráficos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="../../../PORTFOLIO/pages/proyectosWeb.jsp">Proyectos Web</a>

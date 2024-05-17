@@ -436,6 +436,7 @@ h4 {
 
 /* Estilo para los párrafos dentro de los comentarios */
 .comentario p {
+    color: #777;
     margin: 5px 0; 
 }
 
@@ -512,6 +513,9 @@ h4 {
 
 /* Estilo enlaces */
 /* ENLACES */
+a:visited,
+a:link,
+a:focus,
 a:visited,
 a:active {
     text-decoration: none; /* Evita que se subrayen los enlaces al pasar el mouse sobre ellos, después de visitarlos o cuando se activan */

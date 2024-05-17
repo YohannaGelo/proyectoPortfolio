@@ -147,12 +147,12 @@
                                     // Obtiene la lista de comentarios del proyecto
                                     ArrayList<Feedback> comentarios = proy.getFeedbackPorProyecto();
 
+                                    /* SISTEMA DE LIKE / FAVORITOS */
                                     // Crea un nuevo objeto favorito
                                     Favorito nuevoFavorito = new Favorito(proy.getUrl(), username);
-
                                     // LLama al método para registar el voto
                                     boolean votoRegistrado = nuevoFavorito.comprobarLike();
-                                    
+
                                     // según se haya registrado o no el voto, se da un estilo u otro al botón
                                     if (votoRegistrado) {
 

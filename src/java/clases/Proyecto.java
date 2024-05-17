@@ -73,6 +73,7 @@ public abstract class Proyecto {
         // Agrega los Proyectos de diferentes tipos junto a sus comentarios
         proyectosComentarios = ProyectoWeb.cargarProyectosWeb(proyectos);
         proyectosComentarios = Codigo.cargarCodigos(proyectos);
+        proyectosComentarios = DisGrafico.cargarDisGraficos(proyectos);
         
         return proyectosComentarios;
         
